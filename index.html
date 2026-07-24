@@ -132,13 +132,18 @@
   <div id="modal-login" class="custom-modal">
     <div class="modal-box">
       <div class="modal-icon">🔐</div><h2 class="modal-title">ยืนยันตัวตนผู้ดูแล</h2>
-      <input type="password" id="adminPwdInput" class="modal-input" placeholder="••••••••">
+      <div style="position: relative; margin-bottom: 20px;">
+        <input type="password" id="adminPwdInput" class="modal-input" placeholder="••••••••" style="margin-bottom: 0; padding-right: 45px;">
+        <span onclick="togglePassword()" id="eyeIcon" style="position: absolute; right: 15px; top: 15px; cursor: pointer; font-size: 20px; user-select: none;">👁️</span>
+      </div>
       <div class="modal-btn-group">
         <button class="btn-modal btn-cancel" onclick="closeModal('modal-login')">ยกเลิก</button>
         <button class="btn-modal btn-primary" onclick="verifyLogin()">เข้าสู่ระบบ</button>
       </div>
     </div>
   </div>
+
+  
 
   <div id="modal-alert" class="custom-modal">
     <div class="modal-box">
@@ -582,6 +587,21 @@
         });
       };
       showModal('modal-confirm');
+    }
+
+    // ฟังก์ชันเปิด/ปิดตาดูรหัสผ่าน
+    function togglePassword() {
+      const pwdInput = document.getElementById('adminPwdInput');
+      const eyeIcon = document.getElementById('eyeIcon');
+      if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        // ตอนโชว์รหัส: ใช้ดวงตาปกติ แต่ปรับให้สีจางลงเพื่อความสวยงาม
+        eyeIcon.innerHTML = '<span style="opacity: 0.4;">👁️</span>'; 
+      } else {
+        pwdInput.type = 'password';
+        // ตอนซ่อนรหัส: ใช้ดวงตาปกติ สีเข้มชัดเจน
+        eyeIcon.innerHTML = '👁️'; 
+      }
     }
   </script>
 </body>
