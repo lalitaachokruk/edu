@@ -8,18 +8,31 @@
   
   <style>
     :root {
-      --primary: #4f46e5; --secondary: #3b82f6; --bg: #f3f4f6; --text: #1f2937;
-      --btn-border: #ffffff; --btn-text: #4f46e5; --btn-font: 'Prompt', sans-serif;
+      /* ตัวแปรสีและฟอนต์หลักของเว็บ (ดึงค่ามาจาก Admin) */
+      --primary: #4f46e5; 
+      --secondary: #3b82f6; 
+      --bg: #f3f4f6; 
+      --text: #1f2937;
+      --font-main: 'Prompt', sans-serif;
+      /* ตัวแปรปุ่ม */
+      --btn-border: #ffffff; 
+      --btn-text: #4f46e5;
     }
+    
     body {
-      font-family: 'Prompt', sans-serif; background: var(--bg);
+      font-family: var(--font-main); background: var(--bg);
       background-image: radial-gradient(#e5e7eb 1px, transparent 1px); background-size: 20px 20px;
       margin: 0; padding: 0; color: var(--text); overflow-x: hidden;
+      transition: font-family 0.3s ease; /* ทำให้เวลาเปลี่ยนฟอนต์ดูสมูท */
     }
 
-    /* ================= 1. Splash Screen (แบบ Banner โปสเตอร์) ================= */
+    /* บังคับให้ช่องกรอกข้อมูลและปุ่มต่างๆ ใช้ฟอนต์หลักของเว็บด้วย */
+    input, textarea, select, button { font-family: inherit; }
+
+    /* ================= 1. Splash Screen ================= */
     #splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      /* พื้นหลังไล่สี ที่แอดมินสามารถเปลี่ยนได้ */
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white; z-index: 9000; display: flex; flex-direction: column;
       align-items: center; justify-content: center; text-align: center;
@@ -27,7 +40,6 @@
     }
     .splash-content { animation: floatUp 1s ease-out; padding: 20px; display: flex; flex-direction: column; align-items: center; width: 100%; }
     
-    /* รูปแบนเนอร์ ขนาดกำลังดี มีขอบ ไม่ล้นจอ */
     #splashImgDisplay { 
       max-width: 800px; width: 90%; max-height: 60vh; 
       border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); 
@@ -38,12 +50,12 @@
     .splash-content h2 { font-size: 2rem; font-weight: 300; margin-bottom: 30px; color: #e0e7ff; }
     
     .enter-btn {
-      background: white; color: var(--btn-text); border: 4px solid var(--btn-border); padding: 15px 50px;
-      font-family: var(--btn-font); font-size: 24px; font-weight: 700;
+      background: rgba(255, 255, 255, 0.95); color: var(--btn-text); border: 4px solid var(--btn-border); padding: 15px 50px;
+      font-size: 24px; font-weight: 700;
       border-radius: 50px; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
       transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;
     }
-    .enter-btn:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+    .enter-btn:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); background: #ffffff; }
     @keyframes floatUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
 
     /* ================= 2. Custom Modals (ป๊อปอัป) ================= */
@@ -53,10 +65,10 @@
     .modal-icon { font-size: 50px; margin-bottom: 10px; }
     .modal-title { font-size: 24px; color: var(--primary); margin: 0 0 10px 0; font-weight: 600; }
     .modal-desc { color: #4b5563; margin-bottom: 25px; font-size: 16px; }
-    .modal-input { width: 100%; padding: 15px; margin-bottom: 20px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 18px; text-align: center; box-sizing: border-box; font-family: 'Prompt'; }
+    .modal-input { width: 100%; padding: 15px; margin-bottom: 20px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 18px; text-align: center; box-sizing: border-box; }
     .modal-input:focus { border-color: var(--primary); outline: none; }
     .modal-btn-group { display: flex; gap: 10px; justify-content: center; }
-    .btn-modal { padding: 12px 25px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; font-family: 'Prompt'; font-weight: 500; width: 100%; }
+    .btn-modal { padding: 12px 25px; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; font-weight: 500; width: 100%; }
     .btn-primary { background: var(--primary); color: white; }
     .btn-danger { background: #ef4444; color: white; }
     .btn-cancel { background: #f3f4f6; color: #4b5563; }
@@ -68,7 +80,7 @@
     .admin-icon { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); border: none; color: white; font-size: 24px; padding: 10px 15px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(5px); }
     
     .nav-menu { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: -25px; position: relative; z-index: 10; padding: 0 20px; }
-    .nav-btn { background: white; border: none; padding: 12px 25px; border-radius: 50px; font-family: 'Prompt'; font-size: 16px; font-weight: 500; color: var(--primary); cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: 0.3s; }
+    .nav-btn { background: white; border: none; padding: 12px 25px; border-radius: 50px; font-size: 16px; font-weight: 500; color: var(--primary); cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: 0.3s; }
     .nav-btn:hover, .nav-btn.active { background: var(--primary); color: white; transform: translateY(-3px); }
 
     /* ================= 4. พื้นที่เนื้อหา ================= */
@@ -82,30 +94,28 @@
     .card-info { flex: 1; }
     .card-title { font-size: 22px; color: var(--primary); margin: 0 0 15px 0; }
     
-    /* กล่องมาตรฐานและตัวชี้วัด */
     .info-box { background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); }
     .info-box h4 { margin: 0 0 5px 0; color: var(--primary); font-size: 16px; }
     .info-box p { margin: 0; color: #4b5563; font-size: 15px; line-height: 1.5; }
     
-    /* กล่องเฉลยใบงาน */
     .answer-box { background: #f0fdf4; padding: 15px; border-radius: 12px; margin-top: 20px; border: 2px dashed #22c55e; }
     .answer-box h4 { margin: 0 0 10px 0; color: #16a34a; font-size: 16px; }
 
     .card iframe { width: 100%; height: 500px; border: none; border-radius: 15px; background: #f3f4f6; }
-    .delete-btn { position: absolute; top: 20px; right: 20px; background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-family: 'Prompt'; font-size: 14px; }
+    .delete-btn { position: absolute; top: 20px; right: 20px; background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; }
 
     /* ================= 5. ระบบหลังบ้าน (Admin) ================= */
     .admin-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); display: none; border-top: 5px solid #f59e0b; margin-bottom: 30px; }
     .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #fef3c7; padding-bottom: 10px; }
     .admin-section-title { color: #d97706; margin: 0; }
-    .logout-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-family: 'Prompt'; }
+    .logout-btn { background: #ef4444; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
     
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; font-weight: 500; margin-bottom: 8px; color: #374151; }
-    .form-control { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-family: 'Prompt'; font-size: 15px; box-sizing: border-box; }
+    .form-control { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; box-sizing: border-box; }
     
-    .btn-green { background: #10b981; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-family: 'Prompt'; width: 100%; font-size: 16px; font-weight: 600; margin-top: 10px; }
-    .btn-blue { background: #3b82f6; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-family: 'Prompt'; width: 100%; font-size: 16px; font-weight: 600; margin-top: 10px; }
+    .btn-green { background: #10b981; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-size: 16px; font-weight: 600; margin-top: 10px; }
+    .btn-blue { background: #3b82f6; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-size: 16px; font-weight: 600; margin-top: 10px; }
     .menu-item-edit { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e5e7eb; }
 
     @media (max-width: 768px) {
@@ -176,9 +186,7 @@
   <div class="container">
     
     <!-- พื้นที่แสดงสื่อ (เป็น Feed รวมตั้งแต่หน้าแรก) -->
-    <div id="display-section">
-      <!-- ข้อมูลจะถูกโหลดมาเรียงกันที่นี่ -->
-    </div>
+    <div id="display-section"></div>
 
     <!-- ================= ระบบหลังบ้าน (Admin) ================= -->
     <div id="admin-section" class="admin-box">
@@ -187,39 +195,57 @@
         <button class="logout-btn" onclick="logoutAdmin()">🚪 ออกจากระบบ</button>
       </div>
       
-      <!-- ส่วนที่ 1: ตกแต่งหน้าต้อนรับ -->
+      <!-- ส่วนที่ 1: ตกแต่งดีไซน์เว็บและหน้าต้อนรับ -->
       <div style="background: #eef2ff; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
-        <h3 style="margin-top:0; color: #4338ca;">🖼️ 1. ภาพปกหน้าต้อนรับ (Splash Screen)</h3>
+        <h3 style="margin-top:0; color: #4338ca;">🎨 1. ตั้งค่าดีไซน์เว็บ & ภาพปกหน้าต้อนรับ</h3>
+        
+        <!-- กลับมาแล้ว! ปรับสีและฟอนต์ทั้งเว็บ -->
+        <h4 style="margin-bottom: 10px; color: #4338ca; border-bottom: 1px solid #c7d2fe; padding-bottom:5px;">✨ สีและฟอนต์ของเว็บไซต์</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+          <div class="form-group" style="margin:0;">
+            <label>สีหลัก (ไล่สีซ้าย):</label>
+            <input type="color" id="themePrimaryInput" class="form-control" style="height: 45px; padding: 2px;">
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label>สีรอง (ไล่สีขวา):</label>
+            <input type="color" id="themeSecondaryInput" class="form-control" style="height: 45px; padding: 2px;">
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label>ฟอนต์ (เปลี่ยนทั้งเว็บ):</label>
+            <select id="themeFontSelect" class="form-control">
+              <option value="'Prompt', sans-serif">Prompt (ทันสมัย แนะนำ)</option>
+              <option value="'Kanit', sans-serif">Kanit (สวยงาม)</option>
+              <option value="'Mali', cursive">Mali (ลายมือ น่ารัก)</option>
+              <option value="'Sarabun', sans-serif">Sarabun (ทางการ)</option>
+            </select>
+          </div>
+        </div>
+
+        <h4 style="margin-bottom: 10px; color: #4338ca; border-bottom: 1px solid #c7d2fe; padding-bottom:5px;">🖼️ ภาพปก (Splash Screen)</h4>
         <div class="form-group">
-          <label>URL รูปภาพป้าย Banner (จะมีขอบสวยงาม ไม่ล้นจอ):</label>
+          <label>URL รูปภาพป้าย Banner (ถ้ามีรูปจะซ่อนตัวหนังสืออัตโนมัติ):</label>
           <input type="url" id="splashImgInput" class="form-control" placeholder="https://...">
-          <span style="font-size: 13px; color: #ef4444; margin-top:5px; display:block;">*หากใส่รูปภาพ ระบบจะซ่อนตัวหนังสือด้านล่างอัตโนมัติ เพื่อโชว์ภาพแบนเนอร์ของคุณ</span>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
           <div class="form-group"><label>ข้อความ 1 (กรณีไม่มีรูป):</label><input type="text" id="splashTitleInput" class="form-control"></div>
           <div class="form-group"><label>ข้อความ 2 (กรณีไม่มีรูป):</label><input type="text" id="splashSubtitleInput" class="form-control"></div>
         </div>
         
-        <h4 style="margin-bottom: 10px; color: #4338ca;">👉 ตกแต่งปุ่ม "เข้าสู่เว็บไซต์"</h4>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: white; padding: 15px; border-radius: 10px;">
+        <h4 style="margin-bottom: 10px; color: #4338ca; border-bottom: 1px solid #c7d2fe; padding-bottom:5px;">👉 ปุ่มเข้าสู่เว็บไซต์</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 15px; background: white; padding: 15px; border-radius: 10px;">
           <div class="form-group" style="margin:0;"><label>ข้อความปุ่ม:</label><input type="text" id="btnTextInput" class="form-control"></div>
-          <div class="form-group" style="margin:0;"><label>ไอคอนปุ่ม (Emoji):</label><input type="text" id="btnIconInput" class="form-control"></div>
-          <div class="form-group" style="margin:0;"><label>สีเส้นขอบปุ่ม:</label><input type="color" id="btnBorderColor" class="form-control" style="height: 45px;"></div>
-          <div class="form-group" style="margin:0;"><label>สีตัวหนังสือปุ่ม:</label><input type="color" id="btnTextColor" class="form-control" style="height: 45px;"></div>
-          <div class="form-group" style="margin:0; grid-column: span 2;"><label>ฟอนต์ของปุ่ม:</label>
-            <select id="btnFontSelect" class="form-control">
-              <option value="'Prompt', sans-serif">Prompt (ทันสมัย)</option><option value="'Kanit', sans-serif">Kanit (สวยงาม)</option><option value="'Mali', cursive">Mali (ลายมือ)</option>
-            </select>
-          </div>
+          <div class="form-group" style="margin:0;"><label>ไอคอน (Emoji):</label><input type="text" id="btnIconInput" class="form-control"></div>
+          <div class="form-group" style="margin:0;"><label>สีเส้นขอบ:</label><input type="color" id="btnBorderColor" class="form-control" style="height: 45px; padding: 2px;"></div>
+          <div class="form-group" style="margin:0;"><label>สีตัวหนังสือ:</label><input type="color" id="btnTextColor" class="form-control" style="height: 45px; padding: 2px;"></div>
         </div>
-        <!-- ปุ่มบันทึกเฉพาะส่วนที่ 1 -->
-        <button class="btn-blue" onclick="saveSiteSettings()">💾 บันทึกการตั้งค่าหน้าต้อนรับ</button>
+
+        <button class="btn-blue" onclick="saveSiteSettings()">💾 บันทึกดีไซน์และหน้าต้อนรับ</button>
       </div>
 
       <!-- ส่วนที่ 2: ตั้งค่าเว็บไซต์และเมนู -->
       <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
-        <h3 style="margin-top:0; color: #475569;">⚙️ 2. ตั้งค่าเว็บไซต์ & เมนูหลัก</h3>
-        <div class="form-group"><label>ชื่อเว็บไซต์หลัก:</label><input type="text" id="siteTitleInput" class="form-control"></div>
+        <h3 style="margin-top:0; color: #475569;">⚙️ 2. ตั้งค่าชื่อเว็บไซต์ & เมนูหลัก</h3>
+        <div class="form-group"><label>ชื่อเว็บไซต์หลัก (แถบด้านบน):</label><input type="text" id="siteTitleInput" class="form-control"></div>
         <div class="form-group"><label>คำอธิบายใต้ชื่อเว็บ:</label><input type="text" id="siteSubtitleInput" class="form-control"></div>
         <label style="font-weight: 500; margin-top: 15px; display: block;">จัดการเมนู:</label>
         <div id="adminMenuList" style="margin-bottom: 15px;"></div>
@@ -227,16 +253,14 @@
           <input type="text" id="newMenuInput" class="form-control" placeholder="ตั้งชื่อเมนูใหม่...">
           <button class="btn-green" style="width: auto; white-space: nowrap; margin-top:0;" onclick="addNewMenu()">เพิ่มเมนู</button>
         </div>
-        <!-- ปุ่มบันทึกเฉพาะส่วนที่ 2 -->
         <button class="btn-blue" onclick="saveSiteSettings()">💾 บันทึกหัวเว็บและเมนู</button>
       </div>
 
-      <!-- ส่วนที่ 3: เพิ่มเนื้อหาสื่อ (ปรับแบบไดนามิก) -->
+      <!-- ส่วนที่ 3: เพิ่มเนื้อหาสื่อ (แบบไดนามิก) -->
       <div style="background: #f0fdf4; padding: 20px; border-radius: 12px;">
         <h3 style="margin-top:0; color: #16a34a;">📚 3. เพิ่มสื่อการเรียนรู้</h3>
         <div class="form-group">
           <label>เลือกเมนู (หมวดหมู่):</label>
-          <!-- เมื่อเปลี่ยนเมนู จะปรับหน้าตาช่องกรอกข้อมูลให้เหมาะสม -->
           <select id="categorySelect" class="form-control" onchange="toggleAdminFields()"></select>
         </div>
         
@@ -245,7 +269,7 @@
           <input type="text" id="title" class="form-control" placeholder="ระบุหัวข้อ...">
         </div>
 
-        <!-- โซน 3.1: สำหรับเมนู "มาตรฐานและตัวชี้วัด" -->
+        <!-- โซน 3.1: มาตรฐานและตัวชี้วัด -->
         <div id="div-indicator" style="display: none; background: #fff; padding: 15px; border-radius: 10px; border: 1px solid #d1d5db; margin-bottom: 20px;">
           <h4 style="margin:0 0 10px 0; color: #4f46e5;">🎯 ข้อมูลมาตรฐาน/ตัวชี้วัด</h4>
           <div class="form-group" style="margin-bottom: 10px;">
@@ -258,7 +282,7 @@
           </div>
         </div>
 
-        <!-- โซน 3.2: คำอธิบายทั่วไป (ซ่อนเมื่อเลือกมาตรฐาน) -->
+        <!-- โซน 3.2: คำอธิบายเนื้อหา -->
         <div id="div-desc" class="form-group">
           <label>คำอธิบายเนื้อหา:</label>
           <textarea id="description" class="form-control" rows="3"></textarea>
@@ -269,13 +293,13 @@
           <input type="url" id="imgUrl" class="form-control" placeholder="https://...">
         </div>
         
-        <!-- โซน 3.3: ใส่สื่อ/Canva/YouTube -->
+        <!-- โซน 3.3: โค้ดสื่อ -->
         <div class="form-group">
           <label>โค้ดฝังสื่อ (iframe) หรือลิงก์ YouTube:</label>
-          <textarea id="embedCode" class="form-control" rows="3" placeholder="สามารถนำโค้ด Embed จาก Canva, Wordwall, YouTube มาวางได้เลย"></textarea>
+          <textarea id="embedCode" class="form-control" rows="3" placeholder="นำโค้ด Embed จาก Canva, Wordwall, YouTube มาวางได้เลย"></textarea>
         </div>
 
-        <!-- โซน 3.4: สำหรับเมนู "ใบงาน" (ช่องใส่เฉลย) -->
+        <!-- โซน 3.4: เฉลยใบงาน -->
         <div id="div-answer" style="display: none; background: #f0fdf4; padding: 15px; border-radius: 10px; border: 2px dashed #22c55e; margin-bottom: 20px;">
           <h4 style="margin:0 0 10px 0; color: #16a34a;">📝 ส่วนของเฉลยใบงาน</h4>
           <div class="form-group" style="margin-bottom: 0;">
@@ -284,7 +308,6 @@
           </div>
         </div>
 
-        <!-- ปุ่มบันทึกเฉพาะส่วนที่ 3 -->
         <button class="btn-green" onclick="saveMedia()">🚀 อัปโหลดสื่อขึ้นเว็บไซต์</button>
       </div>
 
@@ -307,12 +330,14 @@
     const db = firebase.firestore();
 
     let isAdminLoggedIn = false;
-    let currentCategoryView = 'all'; // ค่าเริ่มต้นคือหน้าแรก (ฟีดรวม)
+    let currentCategoryView = 'all';
     
+    // ข้อมูลเริ่มต้นของเว็บไซต์
     let siteData = {
       title: "ระบบสื่อการเรียนการสอน", subtitle: "โมเดลห้องเรียนแห่งความสุข",
+      themePrimary: "#4f46e5", themeSecondary: "#3b82f6", themeFont: "'Prompt', sans-serif",
       splashImg: "", splashTitle: "ยินดีต้อนรับนักเรียนชั้น ป.6", splashSubtitle: "เรื่อง ภาษาถิ่น",
-      btnText: "เข้าสู่เว็บไซต์", btnIcon: "🚀", btnBorder: "#ffffff", btnTextColor: "#4f46e5", btnFont: "'Prompt', sans-serif",
+      btnText: "เข้าสู่เว็บไซต์", btnIcon: "🚀", btnBorder: "#ffffff", btnTextColor: "#4f46e5",
       menus: [{ id: "indicator", name: "🎯 มาตรฐานและตัวชี้วัด" }, { id: "worksheet", name: "📝 ใบงาน" }]
     };
 
@@ -326,11 +351,20 @@
     }
 
     db.collection("settings").doc("siteConfig").get().then((doc) => {
-      if (doc.exists) siteData = doc.data();
+      if (doc.exists) {
+        let savedData = doc.data();
+        // รวมข้อมูลที่ดึงมาเข้ากับตัวแปร siteData (ป้องกันฟิลด์ใหม่หาย)
+        siteData = { ...siteData, ...savedData }; 
+      }
       applySettings();
     });
 
     function applySettings() {
+      // 1. นำสีและฟอนต์ไปใช้ทั้งเว็บ
+      document.documentElement.style.setProperty('--primary', siteData.themePrimary || '#4f46e5');
+      document.documentElement.style.setProperty('--secondary', siteData.themeSecondary || '#3b82f6');
+      document.documentElement.style.setProperty('--font-main', siteData.themeFont || "'Prompt', sans-serif");
+      
       const imgEl = document.getElementById('splashImgDisplay');
       const textGroup = document.getElementById('splashTextGroup');
       
@@ -348,12 +382,10 @@
       document.getElementById('splashIconDisplay').innerText = siteData.btnIcon;
       document.documentElement.style.setProperty('--btn-border', siteData.btnBorder);
       document.documentElement.style.setProperty('--btn-text', siteData.btnTextColor);
-      document.documentElement.style.setProperty('--btn-font', siteData.btnFont);
 
       document.getElementById('displayTitle').innerText = siteData.title;
       document.getElementById('displaySubtitle').innerText = siteData.subtitle;
 
-      // สร้างเมนู โดยเพิ่มปุ่ม "หน้าแรก (ฟีดรวม)" ไว้ซ้ายสุด
       let menuHtml = `<button class="nav-btn ${currentCategoryView==='all' ? 'active':''}" onclick="loadAllMedia()">🏠 หน้าแรก (ฟีดรวม)</button>`; 
       let selectHtml = ''; let adminMenuHtml = '';
       
@@ -370,6 +402,10 @@
       document.getElementById('categorySelect').innerHTML = selectHtml;
       document.getElementById('adminMenuList').innerHTML = adminMenuHtml;
 
+      // อัปเดตค่าเข้าแบบฟอร์มแอดมิน
+      document.getElementById('themePrimaryInput').value = siteData.themePrimary || '#4f46e5';
+      document.getElementById('themeSecondaryInput').value = siteData.themeSecondary || '#3b82f6';
+      document.getElementById('themeFontSelect').value = siteData.themeFont || "'Prompt', sans-serif";
       document.getElementById('splashImgInput').value = siteData.splashImg || '';
       document.getElementById('splashTitleInput').value = siteData.splashTitle;
       document.getElementById('splashSubtitleInput').value = siteData.splashSubtitle;
@@ -377,19 +413,15 @@
       document.getElementById('btnIconInput').value = siteData.btnIcon;
       document.getElementById('btnBorderColor').value = siteData.btnBorder;
       document.getElementById('btnTextColor').value = siteData.btnTextColor;
-      document.getElementById('btnFontSelect').value = siteData.btnFont;
       document.getElementById('siteTitleInput').value = siteData.title;
       document.getElementById('siteSubtitleInput').value = siteData.subtitle;
       
-      toggleAdminFields(); // อัปเดตช่องกรอกฟอร์ม
+      toggleAdminFields(); 
     }
 
-    // ฟังก์ชันจัดการฟอร์ม Admin ให้เปลี่ยนตามหมวดหมู่
     function toggleAdminFields() {
       const cat = document.getElementById('categorySelect').value;
-      // ถ้าหมวดหมู่มีคำว่า indicator หรือ มาตรฐาน ให้โชว์ช่องกรอกมาตรฐาน
       const isIndicator = cat.includes('indicator') || cat.includes('มาตรฐาน');
-      // ถ้าหมวดหมู่มีคำว่า worksheet หรือ ใบงาน ให้โชว์ช่องเฉลย
       const isWorksheet = cat.includes('worksheet') || cat.includes('ใบงาน');
 
       document.getElementById('div-indicator').style.display = isIndicator ? 'block' : 'none';
@@ -421,10 +453,14 @@
     function logoutAdmin() {
       isAdminLoggedIn = false; document.getElementById('admin-section').style.display = 'none';
       customAlert("ออกจากระบบ", "ออกจากระบบผู้ดูแลเรียบร้อยแล้ว และกลับสู่หน้าแรก", "🚪");
-      loadAllMedia(); // ออกจากระบบแล้วกลับไปหน้าแรกทันที
+      loadAllMedia(); 
     }
 
+    // ฟังก์ชันบันทึกการตั้งค่า (สี ฟอนต์ เมนู)
     function saveSiteSettings() {
+      siteData.themePrimary = document.getElementById('themePrimaryInput').value;
+      siteData.themeSecondary = document.getElementById('themeSecondaryInput').value;
+      siteData.themeFont = document.getElementById('themeFontSelect').value;
       siteData.splashImg = document.getElementById('splashImgInput').value;
       siteData.splashTitle = document.getElementById('splashTitleInput').value;
       siteData.splashSubtitle = document.getElementById('splashSubtitleInput').value;
@@ -432,11 +468,11 @@
       siteData.btnIcon = document.getElementById('btnIconInput').value;
       siteData.btnBorder = document.getElementById('btnBorderColor').value;
       siteData.btnTextColor = document.getElementById('btnTextColor').value;
-      siteData.btnFont = document.getElementById('btnFontSelect').value;
       siteData.title = document.getElementById('siteTitleInput').value;
       siteData.subtitle = document.getElementById('siteSubtitleInput').value;
+      
       db.collection("settings").doc("siteConfig").set(siteData).then(() => {
-        customAlert("บันทึกสำเร็จ!", "อัปเดตการตั้งค่าเรียบร้อยแล้ว", "💾");
+        customAlert("บันทึกสำเร็จ!", "อัปเดตการตั้งค่าเว็บไซต์เรียบร้อยแล้ว", "💾");
         applySettings();
       });
     }
@@ -464,21 +500,18 @@
       if(currentCategoryView === 'all') loadAllMedia();
       else loadMedia(currentCategoryView, getCategoryName(currentCategoryView));
     }
+    
     function getCategoryName(id) {
       const menu = siteData.menus.find(m => m.id === id); return menu ? menu.name : '';
     }
 
-    // ฟังก์ชันสร้างการ์ดเนื้อหา (Render HTML)
     function buildCardHtml(doc, data) {
       let delBtn = isAdminLoggedIn ? `<button class="delete-btn" onclick="promptDeleteMedia('${doc.id}')">🗑️ ลบสื่อนี้</button>` : '';
       let imgHTML = data.imgUrl ? `<img src="${data.imgUrl}" class="card-image">` : '';
       
-      // ดึงข้อมูลมาตรฐานและตัวชี้วัด (ถ้ามี)
       let stdHtml = data.standard ? `<div class="info-box"><h4>🎯 มาตรฐาน:</h4><p>${data.standard.replace(/\n/g, '<br>')}</p></div>` : '';
       let indHtml = data.indicator ? `<div class="info-box"><h4>📌 ตัวชี้วัด:</h4><p>${data.indicator.replace(/\n/g, '<br>')}</p></div>` : '';
       let descHTML = data.description ? `<p class="card-desc">${data.description.replace(/\n/g, '<br>')}</p>` : '';
-      
-      // ดึงข้อมูลเฉลยใบงาน (ถ้ามี)
       let ansHtml = data.answerEmbed ? `<div class="answer-box"><h4>✅ เฉลยใบงาน:</h4>${data.answerEmbed}</div>` : '';
 
       let infoContent = stdHtml + indHtml + descHTML;
@@ -487,9 +520,8 @@
       return `<div class="card">${delBtn}${headerHTML}${data.embedCode || ''}${ansHtml}</div>`;
     }
 
-    // 1. โหลดแบบหน้าแรก (Feed รวมทุกอย่าง)
     function loadAllMedia() {
-      currentCategoryView = 'all'; applySettings(); // อัปเดตสีเมนู
+      currentCategoryView = 'all'; applySettings();
       const display = document.getElementById('display-section');
       display.innerHTML = "<div style='text-align:center; padding: 50px;'><h3>กำลังโหลดเนื้อหาฟีดรวม... ⏳</h3></div>";
 
@@ -500,7 +532,6 @@
       });
     }
 
-    // 2. โหลดแบบแยกหมวดหมู่
     function loadMedia(categoryId, categoryName) {
       currentCategoryView = categoryId; applySettings();
       const display = document.getElementById('display-section');
