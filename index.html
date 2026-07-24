@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ศูนย์รวมสื่อการเรียนการสอน</title>
+  <style>
+    /* ตั้งค่าหน้าตาเว็บไซต์ (CSS) */
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; text-align: center; }
+    .header { background: #1976d2; padding: 20px; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .header h1 { margin: 0 0 15px 0; font-size: 28px; }
+    .menu { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+    .menu button { padding: 10px 20px; font-size: 16px; cursor: pointer; background: #fff; border: 2px solid transparent; border-radius: 8px; color: #1976d2; font-weight: bold; transition: 0.3s; }
+    .menu button:hover { background: #e3f2fd; }
+    .menu button.admin-btn { background: #ff9800; color: white; }
+    .menu button.admin-btn:hover { background: #f57c00; }
+    
+    .container { max-width: 800px; margin: 20px auto; padding: 0 15px; text-align: left; }
+    
+    /* กล่องแสดงผลสื่อ */
+    .card { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .card h2 { margin-top: 0; color: #333; border-bottom: 2px solid #f4f4f9; padding-bottom: 10px; font-size: 20px; }
+    .card iframe { width: 100%; height: 500px; border: none; border-radius: 8px; overflow: auto; }
+    
+    /* กล่องแอดมิน */
+    .admin-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: none; }
+    .admin-box input, .admin-box select, .admin-box textarea { width: 100%; margin-bottom: 15px; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+    .admin-box button.save-btn { background: #4caf50; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; }
+    .admin-box button.save-btn:hover { background: #388e3c; }
+
+    @media (max-width: 600px) {
+        .card iframe { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ส่วนหัวและเมนู -->
+  <div class="header">
+    <h1>📚 ศูนย์รวมสื่อการเรียนการสอน</h1>
+    <div class="menu">
+      <button onclick="loadData('video')">🎬 สื่อวิดีโอ</button>
+      <button onclick="loadData('game')">🎮 เกมการศึกษา</button>
+      <button onclick="loadData('worksheet')">📝 ใบงาน</button>
+      <button class="admin-btn" onclick="checkAdmin()">⚙️ จัดการระบบ (Admin)</button>
+    </div>
+  </div>
+
+  <div class="container">
+    
+    <!-- หน้าแสดงผลสื่อ (หน้าสำหรับนักเรียน) -->
+    <div id="display-section">
+      <div class="card" style="text-align: center; color: #666;">
+        👆 คลิกเลือกเมนูด้านบนเพื่อดูสื่อการเรียนรู้ได้เลยค่ะ
+      </div>
+    </div>
+
+    <!-- หน้าหลังบ้าน (ซ่อนไว้จนกว่าจะใส่รหัสถูก) -->
+    <div id="admin-section" class="admin-box">
+      <h2 style="margin-top:0; color:#1976d2;">➕ เพิ่มสื่อเข้าเว็บไซต์ (ระบบ Admin)</h2>
+      
+      <label><b>ชื่อเนื้อหา:</b></label>
+      <input type="text" id="title" placeholder="เช่น เกมตอบคำถามภาษาไทย">
+      
+      <label><b>หมวดหมู่:</b></label>
+      <select id="category">
+        <option value="video">สื่อวิดีโอ (YouTube)</option>
+        <option value="game">เกมการศึกษา (Wordwall, Kahoot, Blooket ฯล)</option>
+        <option value="worksheet">ใบงาน (PDF, Google Docs)</option>
+      </select>
+      
+      <label><b>ลิงก์ หรือ โค้ดฝัง (iframe):</b></label>
+      <textarea id="embedCode" placeholder="นำลิงก์ หรือ โค้ด iframe มาวางที่นี่ได้เลย" rows="5"></textarea>
+      
+      <button class="save-btn" onclick="saveData()">💾 บันทึกข้อมูลขึ้นเว็บไซต์</button>
+    </div>
+
+  </div>
+
+  <!-- โหลด Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script>
+    // ✅ นำ Config ของคุณมาใส่ให้เรียบร้อยแล้ว!
+    const firebaseConfig = {
+      apiKey: "AIzaSyD34HFIpO9LQc0GuFfiC1FuBd7fROOvIco",
+      authDomain: "cee3501-9eba6.firebaseapp.com",
+      databaseURL: "https://cee3501-9eba6-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "cee3501-9eba6",
+      storageBucket: "cee3501-9eba6.firebasestorage.app",
+      messagingSenderId: "699916890411",
+      appId: "1:699916890411:web:414a654d8024adbe33956e"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // ตัวแปรเก็บหน้าต่างต่างๆ
+    const displaySection = document.getElementById('display-section');
+    const adminSection = document.getElementById('admin-section');
+
+    // 1. ฟังก์ชันเช็ครหัสผ่านก่อนเข้าหน้า Admin
+    function checkAdmin() {
+      // ตั้งรหัสผ่านตรงนี้ (ปัจจุบันตั้งเป็น 1234)
+      const password = prompt("กรุณาใส่รหัสผ่านเพื่อเข้าสู่ระบบหลังบ้าน:");
+      if (password === "1234") {
+        displaySection.style.display = "none";
+        adminSection.style.display = "block";
+      } else if (password !== null) {
+        alert("รหัสผ่านไม่ถูกต้อง!");
+      }
+    }
+
+    // 2. ฟังก์ชันโหลดข้อมูลมาโชว์นักเรียน
+    function loadData(category) {
+      adminSection.style.display = "none";
+      displaySection.style.display = "block";
+      displaySection.innerHTML = "<h3 style='text-align:center;'>กำลังโหลดข้อมูล... ⏳</h3>";
+
+      // ดึงข้อมูลจาก Firebase
+      db.collection("medias")
+        .where("category", "==", category)
+        .orderBy("timestamp", "desc")
+        .get()
+        .then((querySnapshot) => {
+          displaySection.innerHTML = "";
+          if(querySnapshot.empty) {
+            displaySection.innerHTML = "<div class='card' style='text-align:center;'>ยังไม่มีเนื้อหาในหมวดหมู่นี้</div>";
+            return;
+          }
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const div = document.createElement('div');
+            div.className = "card";
+            div.innerHTML = `<h2>${data.title}</h2>${data.embedCode}`;
+            displaySection.appendChild(div);
+          });
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+          displaySection.innerHTML = `<div class='card' style='color:red;'>⚠️ โหลดข้อมูลไม่สำเร็จ: กรุณาตรวจสอบการตั้งค่า Index อีกครั้ง หรือลองรีเฟรชหน้าเว็บ</div>`;
+        });
+    }
+
+    // 3. ฟังก์ชันบันทึกข้อมูลของ Admin
+    function saveData() {
+      const title = document.getElementById('title').value;
+      const category = document.getElementById('category').value;
+      let embed = document.getElementById('embedCode').value;
+
+      if(!title || !embed) {
+        alert("กรุณากรอกข้อมูลให้ครบถ้วน!");
+        return;
+      }
+
+      // ระบบแปลงลิงก์ YouTube เป็น iframe
+      if(embed.includes("youtube.com/watch?v=")) {
+        const videoId = embed.split("v=")[1].substring(0, 11);
+        embed = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
+      } else if (embed.includes("youtu.be/")) {
+        const videoId = embed.split("youtu.be/")[1].substring(0, 11);
+        embed = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
+      }
+
+      // บันทึกลงฐานข้อมูล
+      db.collection("medias").add({
+        title: title,
+        category: category,
+        embedCode: embed,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        alert("🎉 บันทึกข้อมูลสำเร็จ!");
+        document.getElementById('title').value = '';
+        document.getElementById('embedCode').value = '';
+        // โหลดหน้านั้นขึ้นมาโชว์ทันที
+        loadData(category);
+      }).catch((error) => {
+        alert("เกิดข้อผิดพลาด: " + error.message);
+      });
+    }
+  </script>
+</body>
+</html>
