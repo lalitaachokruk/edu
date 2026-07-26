@@ -450,14 +450,30 @@
       document.getElementById('categorySelect').innerHTML = selectHtml;
       document.getElementById('adminMenuList').innerHTML = adminMenuHtml;
 
-      // อัปเดตฟอร์มแอดมิน
-      const fields = ['themePrimary', 'themeSecondary', 'splashC1', 'splashC2', 'themeFont', 'bannerBg', 'bannerText', 'splashImg', 'splashTitle', 'splashSubtitle', 'btnText', 'btnIcon', 'btnBorderColor', 'btnTextColor', 'siteTitle', 'siteSubtitle', 'ftLogo', 'ftTitle', 'ftSubject', 'ftBarcode'];
-      fields.forEach(key => {
-        const inputId = key.replace('Color', '') + (key.includes('Select') ? '' : 'Input');
-        const el = document.getElementById(inputId) || document.getElementById(key + 'Select');
-        if(el) el.value = siteData[key] || '';
-      });
-      document.getElementById('btnBorderColor').value = siteData.btnBorder || '#ffffff'; document.getElementById('btnTextColor').value = siteData.btnTextColor || '#4f46e5';
+      // อัปเดตฟอร์มแอดมิน (เขียนแยกป้องกันการดึงข้อมูลทับกัน)
+      document.getElementById('themePrimaryInput').value = siteData.themePrimary || '#4f46e5';
+      document.getElementById('themeSecondaryInput').value = siteData.themeSecondary || '#3b82f6';
+      document.getElementById('splashC1Input').value = siteData.splashC1 || '#4f46e5';
+      document.getElementById('splashC2Input').value = siteData.splashC2 || '#3b82f6';
+      document.getElementById('themeFontSelect').value = siteData.themeFont || "'Prompt', sans-serif";
+      document.getElementById('bannerBgInput').value = siteData.bannerBg || '#eef2ff';
+      document.getElementById('bannerTextInput').value = siteData.bannerText || '#4338ca';
+      document.getElementById('splashImgInput').value = siteData.splashImg || '';
+      document.getElementById('splashTitleInput').value = siteData.splashTitle || '';
+      document.getElementById('splashSubtitleInput').value = siteData.splashSubtitle || '';
+      
+      // ดึงค่าปุ่มเข้าเว็บแบบเจาะจง
+      document.getElementById('btnTextInput').value = siteData.btnText || 'เข้าสู่เว็บไซต์';
+      document.getElementById('btnIconInput').value = siteData.btnIcon || '🚀';
+      document.getElementById('btnBorderColor').value = siteData.btnBorder || '#ffffff';
+      document.getElementById('btnTextColor').value = siteData.btnTextColor || '#4f46e5';
+      
+      document.getElementById('siteTitleInput').value = siteData.title || '';
+      document.getElementById('siteSubtitleInput').value = siteData.subtitle || '';
+      document.getElementById('ftLogoInput').value = siteData.ftLogo || '';
+      document.getElementById('ftTitleInput').value = siteData.ftTitle || '';
+      document.getElementById('ftSubjectInput').value = siteData.ftSubject || '';
+      document.getElementById('ftBarcodeInput').value = siteData.ftBarcode || '';
       
       toggleAdminFields();
     }
