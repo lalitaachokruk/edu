@@ -8,11 +8,8 @@
   
   <style>
     :root {
-      /* สีหลักของเว็บ */
-      --primary: #4f46e5; --secondary: #3b82f6; --bg: #f3f4f6; --text: #1f2937;
-      /* สีหน้า Splash Screen */
+      --primary: #4f46e5; --secondary: #3b82f6; --bg: #f8fafc; --text: #1e293b;
       --splash-c1: #4f46e5; --splash-c2: #3b82f6;
-      /* ฟอนต์และปุ่ม */
       --font-main: 'Prompt', sans-serif;
       --btn-border: #ffffff; --btn-text: #4f46e5;
     }
@@ -20,7 +17,7 @@
     body { font-family: var(--font-main); background: var(--bg); margin: 0; padding: 0; color: var(--text); overflow-x: hidden; transition: 0.3s; }
     input, textarea, select, button { font-family: inherit; }
 
-    /* ================= 1. หน้าต่างต้อนรับ (Splash Screen) ================= */
+    /* ================= 1. หน้าต่างต้อนรับ ================= */
     #splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(135deg, var(--splash-c1), var(--splash-c2));
@@ -34,104 +31,109 @@
     .enter-btn:hover { transform: scale(1.05); background: #ffffff; }
     @keyframes floatUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
 
-    /* ================= 2. Custom Modals (ป๊อปอัป) ================= */
-    .custom-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 99999; display: none; justify-content: center; align-items: center; }
-    .modal-box { background: white; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); width: 90%; max-width: 400px; animation: popIn 0.3s; }
+    /* ================= 2. Custom Modals ================= */
+    .custom-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 99999; display: none; justify-content: center; align-items: center; }
+    .modal-box { background: white; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.15); width: 90%; max-width: 400px; animation: popIn 0.3s; }
     @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .modal-icon { font-size: 40px; margin-bottom: 10px; }
     .modal-title { font-size: 22px; color: var(--primary); margin: 0 0 10px 0; font-weight: 600; }
     .modal-desc { color: #4b5563; margin-bottom: 20px; font-size: 15px; }
     .modal-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
     .modal-btn-group { display: flex; gap: 10px; justify-content: center; }
-    .btn-modal { padding: 10px 20px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 500; width: 100%; }
+    .btn-modal { padding: 10px 20px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 500; width: 100%; transition: 0.2s; }
     .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { opacity: 0.9; }
     .btn-danger { background: #ef4444; color: white; }
-    .btn-cancel { background: #f3f4f6; color: #4b5563; }
+    .btn-cancel { background: #f1f5f9; color: #475569; }
 
-    /* ================= 3. ส่วนเว็บนักเรียน (Student View) ================= */
+    /* ================= 3. ส่วนเว็บนักเรียน ================= */
     #student-view { display: none; min-height: 100vh; display: flex; flex-direction: column; }
-    .header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 40px 20px; text-align: center; position: relative; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 40px 20px; text-align: center; position: relative; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
     .header h1 { margin: 0; font-size: 34px; font-weight: 600; }
     .header p { margin: 10px 0 0 0; font-size: 18px; opacity: 0.9; }
     .admin-icon { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); border: none; color: white; font-size: 20px; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(5px); }
     
     .nav-menu { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: -20px; position: relative; z-index: 10; padding: 0 20px; }
-    .nav-btn { background: white; border: none; padding: 10px 20px; border-radius: 50px; font-size: 15px; font-weight: 500; color: var(--primary); cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: 0.3s; }
+    .nav-btn { background: white; border: none; padding: 10px 20px; border-radius: 50px; font-size: 15px; font-weight: 500; color: var(--primary); cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
     .nav-btn:hover, .nav-btn.active { background: var(--primary); color: white; transform: translateY(-3px); }
 
     .container { flex: 1; max-width: 1000px; margin: 40px auto; padding: 0 20px; width: 100%; box-sizing: border-box; }
     
-    .feed-category-header { background: var(--primary); color: white; padding: 10px 20px; border-radius: 10px; margin: 40px 0 20px 0; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; }
+    .feed-category-header { background: var(--primary); color: white; padding: 8px 20px; border-radius: 10px; margin: 40px 0 20px 0; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: inline-block; }
     
-    .card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); animation: fadeIn 0.4s; }
-    @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+    .card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); animation: fadeIn 0.4s; border: 1px solid #f1f5f9; }
     .card-title { font-size: 22px; color: var(--primary); margin: 0 0 15px 0; }
     
     .info-box { background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); }
     .info-box h4 { margin: 0 0 5px 0; color: var(--primary); font-size: 16px; }
-    .info-box p { margin: 0; color: #4b5563; font-size: 15px; line-height: 1.5; }
+    .info-box p { margin: 0; color: #475569; font-size: 15px; line-height: 1.5; }
     
-    /* Layout สำหรับสื่อ (Grid อัจฉริยะ) */
     .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 15px; }
-    .media-grid iframe { width: 100%; height: 400px; border: none; border-radius: 12px; background: #f3f4f6; }
+    .media-grid iframe { width: 100%; height: 400px; border: none; border-radius: 12px; background: #f1f5f9; }
     audio { width: 100%; margin-top: 15px; }
 
-    /* Footer ท้ายเว็บ */
-    footer { background: white; padding: 40px 20px; margin-top: 40px; border-top: 4px solid var(--primary); box-shadow: 0 -5px 20px rgba(0,0,0,0.03); }
-    .footer-content { max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; align-items: center; }
-    .footer-info { flex: 2; min-width: 250px; }
-    .footer-info h3 { color: var(--primary); margin: 0 0 10px 0; font-size: 24px; }
-    .footer-info p { color: #6b7280; margin: 5px 0; font-size: 15px; line-height: 1.6; }
-    .footer-barcode { flex: 1; text-align: center; min-width: 150px; }
-    .footer-barcode img { max-width: 120px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .footer-barcode p { margin: 10px 0 0 0; font-size: 14px; color: #4b5563; font-weight: 500; }
+    /* ================= ท้ายเว็บไซต์ (Footer) แนวมินิมอล ================= */
+    footer { background: white; margin-top: 40px; border-top: 1px solid #e2e8f0; padding: 25px 20px; }
+    .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+    
+    .footer-left { display: flex; gap: 20px; align-items: flex-start; flex: 1; }
+    #ftLogoImg { height: 80px; object-fit: contain; display: none; }
+    .footer-text h3 { margin: 0 0 5px 0; font-size: 18px; color: var(--primary); }
+    .footer-text p { margin: 0 0 10px 0; font-size: 14px; color: #64748b; }
+    .footer-members { font-size: 13px; color: #475569; line-height: 1.6; }
+    
+    .footer-right { text-align: right; }
+    #ftBarcodeImg { height: 90px; object-fit: contain; border-radius: 8px; border: 1px solid #f1f5f9; display: none; }
 
-    /* ================= 4. ระบบหลังบ้านระดับ Pro (Admin Dashboard) ================= */
-    #admin-dashboard { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; background: #f1f5f9; z-index: 20000; }
+    /* ================= 4. ระบบหลังบ้าน (Minimal White) ================= */
+    #admin-dashboard { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; background: #f8fafc; z-index: 20000; }
     .dashboard-layout { display: flex; width: 100%; height: 100%; }
     
-    /* เมนูด้านซ้าย */
-    .sidebar { width: 260px; background: #1e293b; color: white; padding: 20px 0; display: flex; flex-direction: column; }
-    .sidebar-brand { padding: 0 20px 20px 20px; border-bottom: 1px solid #334155; margin-bottom: 20px; }
-    .sidebar-brand h2 { margin: 0; font-size: 20px; color: #38bdf8; }
-    .sidebar-brand p { margin: 5px 0 0 0; font-size: 13px; color: #94a3b8; }
+    /* เมนูด้านซ้ายสีขาวคลีน */
+    .sidebar { width: 260px; background: #ffffff; color: #1e293b; padding: 20px 0; display: flex; flex-direction: column; border-right: 1px solid #e2e8f0; }
+    .sidebar-brand { padding: 0 20px 20px 20px; border-bottom: 1px solid #f1f5f9; margin-bottom: 20px; }
+    .sidebar-brand h2 { margin: 0; font-size: 20px; color: var(--primary); }
+    .sidebar-brand p { margin: 5px 0 0 0; font-size: 13px; color: #64748b; }
     
     .sidebar-menu { flex: 1; display: flex; flex-direction: column; gap: 5px; padding: 0 15px; }
-    .sidebar-btn { background: transparent; color: #cbd5e1; border: none; padding: 12px 15px; border-radius: 8px; text-align: left; font-size: 15px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
-    .sidebar-btn:hover { background: #334155; color: white; }
+    .sidebar-btn { background: transparent; color: #475569; border: none; padding: 12px 15px; border-radius: 8px; text-align: left; font-size: 15px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
+    .sidebar-btn:hover { background: #f1f5f9; color: var(--primary); }
     .sidebar-btn.active { background: var(--primary); color: white; font-weight: 500; }
-    .sidebar-logout { margin: 20px 15px; background: #ef4444; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; }
+    .sidebar-logout { margin: 20px 15px; background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 500; }
+    .sidebar-logout:hover { background: #ef4444; color: white; }
 
     /* พื้นที่ทำงานด้านขวา */
     .admin-main { flex: 1; overflow-y: auto; padding: 30px; }
-    .admin-panel { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); max-width: 900px; margin: 0 auto; display: none; }
+    .admin-panel { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; max-width: 900px; margin: 0 auto; display: none; }
     .admin-panel.active { display: block; animation: fadeIn 0.3s; }
-    .panel-title { margin: 0 0 25px 0; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; font-size: 22px; }
+    .panel-title { margin: 0 0 25px 0; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; font-size: 22px; }
 
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; font-weight: 500; margin-bottom: 8px; color: #475569; font-size: 15px; }
-    .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; box-sizing: border-box; background: #f8fafc; }
-    .form-control:focus { outline: none; border-color: var(--primary); background: white; }
+    .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; box-sizing: border-box; background: #fcfcfd; transition: 0.2s; }
+    .form-control:focus { outline: none; border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
     
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
     .btn-green { background: #10b981; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; transition: 0.2s; }
     .btn-green:hover { background: #059669; }
     .btn-blue { background: #3b82f6; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; transition: 0.2s; }
+    .btn-blue:hover { background: #2563eb; }
     
-    .menu-list-item { display: flex; justify-content: space-between; align-items: center; background: #f1f5f9; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; }
+    .menu-list-item { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 10px 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e2e8f0; }
     .menu-actions button { border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 13px; margin-left: 5px; }
 
-    /* ตารางจัดการสื่อ (ลบสื่อ) */
     .media-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
     .media-table th, .media-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
     .media-table th { background: #f8fafc; color: #475569; font-weight: 500; }
     
     @media (max-width: 768px) {
       .dashboard-layout { flex-direction: column; }
-      .sidebar { width: 100%; padding: 10px; }
+      .sidebar { width: 100%; padding: 10px; border-right: none; border-bottom: 1px solid #e2e8f0; }
       .sidebar-menu { flex-direction: row; flex-wrap: wrap; }
       .admin-main { padding: 15px; }
-      .footer-content { flex-direction: column; text-align: center; }
+      .footer-content { flex-direction: column; align-items: center; text-align: center; }
+      .footer-left { flex-direction: column; align-items: center; }
+      .footer-right { text-align: center; margin-top: 10px; }
     }
   </style>
 </head>
@@ -141,10 +143,9 @@
   <div id="modal-login" class="custom-modal">
     <div class="modal-box">
       <div class="modal-icon">🔐</div><h2 class="modal-title">ยืนยันตัวตนผู้ดูแล</h2>
-      <!-- ปรับดวงตาให้สวยงาม -->
       <div style="position: relative; margin-bottom: 15px;">
         <input type="password" id="adminPwdInput" class="modal-input" placeholder="รหัสผ่าน..." style="margin-bottom: 0; padding-right: 45px;">
-        <span onclick="togglePassword()" id="eyeIcon" style="position: absolute; right: 15px; top: 12px; cursor: pointer; font-size: 18px; color: #6b7280; user-select: none;">👁️</span>
+        <span onclick="togglePassword()" id="eyeIcon" style="position: absolute; right: 15px; top: 12px; cursor: pointer; font-size: 18px; color: #64748b; user-select: none;">👁️</span>
       </div>
       <div class="modal-btn-group">
         <button class="btn-modal btn-cancel" onclick="closeModal('modal-login')">ยกเลิก</button>
@@ -200,26 +201,33 @@
       <div id="display-section"></div>
     </div>
     
-    <!-- Footer ท้ายเว็บไซต์ -->
+    <!-- Footer ท้ายเว็บไซต์ (Minimal) -->
     <footer>
       <div class="footer-content">
-        <div class="footer-info">
-          <h3 id="ftTitleDisplay">ระบบสื่อการเรียนรู้</h3>
-          <p id="ftSubjectDisplay">รหัสวิชา: -</p>
-          <p id="ftMembersDisplay" style="margin-top: 10px; font-size: 14px;"></p>
+        <!-- ซ้าย: โลโก้ + ข้อความ -->
+        <div class="footer-left">
+          <img id="ftLogoImg" src="" alt="Logo">
+          <div class="footer-text">
+            <h3 id="ftTitleDisplay">ระบบสื่อการเรียนรู้</h3>
+            <p id="ftSubjectDisplay">รหัสวิชา: -</p>
+            <div class="footer-members">
+              <strong>จัดทำโดย:</strong><br>
+              <span id="ftMembersDisplay"></span>
+            </div>
+          </div>
         </div>
-        <div class="footer-barcode" id="ftBarcodeBlock">
-          <img id="ftBarcodeImg" src="" alt="Barcode/QR Code">
-          <p>แสกนเพื่อเข้าสู่ระบบ</p>
+        <!-- ขวา: QR Code -->
+        <div class="footer-right">
+          <img id="ftBarcodeImg" src="" alt="QR Code">
         </div>
       </div>
     </footer>
   </div>
 
-  <!-- ================= ระบบหลังบ้านระดับ Pro (Admin Dashboard) ================= -->
+  <!-- ================= ระบบหลังบ้าน (Minimal White Dashboard) ================= -->
   <div id="admin-dashboard">
     <div class="dashboard-layout">
-      <!-- Sidebar -->
+      <!-- Sidebar สีขาว -->
       <div class="sidebar">
         <div class="sidebar-brand">
           <h2>🛠️ Control Panel</h2>
@@ -241,12 +249,12 @@
         <div id="tab-design" class="admin-panel active">
           <h2 class="panel-title">🎨 ตั้งค่าดีไซน์ & หน้าปกต้อนรับ</h2>
           <div class="grid-2">
-            <div class="form-group"><label>สีหลักเว็บไซต์ (Primary):</label><input type="color" id="themePrimaryInput" class="form-control" style="height: 45px;"></div>
-            <div class="form-group"><label>สีรองเว็บไซต์ (Secondary):</label><input type="color" id="themeSecondaryInput" class="form-control" style="height: 45px;"></div>
+            <div class="form-group"><label>สีหลักเว็บไซต์ (Primary):</label><input type="color" id="themePrimaryInput" class="form-control" style="height: 45px; padding: 2px;"></div>
+            <div class="form-group"><label>สีรองเว็บไซต์ (Secondary):</label><input type="color" id="themeSecondaryInput" class="form-control" style="height: 45px; padding: 2px;"></div>
           </div>
           <div class="grid-2">
-            <div class="form-group"><label>สีหน้าปก (ไล่สีซ้าย):</label><input type="color" id="splashC1Input" class="form-control" style="height: 45px;"></div>
-            <div class="form-group"><label>สีหน้าปก (ไล่สีขวา):</label><input type="color" id="splashC2Input" class="form-control" style="height: 45px;"></div>
+            <div class="form-group"><label>สีหน้าปก (ไล่สีซ้าย):</label><input type="color" id="splashC1Input" class="form-control" style="height: 45px; padding: 2px;"></div>
+            <div class="form-group"><label>สีหน้าปก (ไล่สีขวา):</label><input type="color" id="splashC2Input" class="form-control" style="height: 45px; padding: 2px;"></div>
           </div>
           <div class="form-group"><label>ฟอนต์ (เปลี่ยนทั้งเว็บ):</label>
             <select id="themeFontSelect" class="form-control">
@@ -257,18 +265,18 @@
             </select>
           </div>
           <hr style="border-top:1px solid #e2e8f0; margin:30px 0;">
-          <div class="form-group"><label>URL รูปภาพป้าย Banner (จะมีขอบ ไม่ล้นจอ):</label><input type="url" id="splashImgInput" class="form-control" placeholder="https://..."></div>
+          <div class="form-group"><label>URL รูปภาพป้าย Banner (ถ้ามีจะซ่อนตัวอักษร):</label><input type="url" id="splashImgInput" class="form-control" placeholder="https://..."></div>
           <div class="grid-2">
             <div class="form-group"><label>ข้อความ 1 (กรณีไม่ใช้รูป):</label><input type="text" id="splashTitleInput" class="form-control"></div>
             <div class="form-group"><label>ข้อความ 2 (กรณีไม่ใช้รูป):</label><input type="text" id="splashSubtitleInput" class="form-control"></div>
           </div>
-          <div style="background:#f8fafc; padding:15px; border-radius:10px;">
+          <div style="background:#f8fafc; padding:15px; border-radius:10px; border:1px solid #e2e8f0;">
             <label style="font-weight:600; color:#4f46e5; margin-bottom:10px; display:block;">ตกแต่งปุ่มเข้าสู่เว็บ</label>
             <div class="grid-2">
               <div class="form-group" style="margin:0;"><label>ข้อความปุ่ม:</label><input type="text" id="btnTextInput" class="form-control"></div>
               <div class="form-group" style="margin:0;"><label>ไอคอน (Emoji):</label><input type="text" id="btnIconInput" class="form-control"></div>
-              <div class="form-group" style="margin:0;"><label>สีเส้นขอบ:</label><input type="color" id="btnBorderColor" class="form-control" style="height:45px;"></div>
-              <div class="form-group" style="margin:0;"><label>สีข้อความ:</label><input type="color" id="btnTextColor" class="form-control" style="height:45px;"></div>
+              <div class="form-group" style="margin:0;"><label>สีเส้นขอบ:</label><input type="color" id="btnBorderColor" class="form-control" style="height:45px; padding: 2px;"></div>
+              <div class="form-group" style="margin:0;"><label>สีข้อความ:</label><input type="color" id="btnTextColor" class="form-control" style="height:45px; padding: 2px;"></div>
             </div>
           </div>
           <button class="btn-blue" style="margin-top:20px; width:100%;" onclick="saveSiteSettings('design')">💾 บันทึกการตั้งค่าดีไซน์</button>
@@ -281,7 +289,7 @@
             <div class="form-group"><label>ชื่อเว็บไซต์ (แถบด้านบน):</label><input type="text" id="siteTitleInput" class="form-control"></div>
             <div class="form-group"><label>คำอธิบายใต้ชื่อเว็บ:</label><input type="text" id="siteSubtitleInput" class="form-control"></div>
           </div>
-          <div style="background:#f1f5f9; padding:20px; border-radius:12px; margin-bottom:25px;">
+          <div style="background:#f8fafc; padding:20px; border-radius:12px; margin-bottom:25px; border:1px solid #e2e8f0;">
             <label style="font-weight:600; font-size:16px;">จัดเรียงและเพิ่มเมนู:</label>
             <div id="adminMenuList" style="margin:15px 0;"></div>
             <div style="display:flex; gap:10px;">
@@ -290,12 +298,13 @@
             </div>
           </div>
           
-          <h3 style="color:#1e293b; border-bottom:1px solid #e2e8f0; padding-bottom:10px;">📌 ข้อมูลท้ายเว็บไซต์ (Footer)</h3>
+          <h3 style="color:#1e293b; border-bottom:1px solid #e2e8f0; padding-bottom:10px;">📌 ข้อมูลท้ายเว็บไซต์ (Footer Minimal)</h3>
+          <div class="form-group"><label>URL โลโก้เว็บไซต์ (ซ้ายสุด):</label><input type="url" id="ftLogoInput" class="form-control" placeholder="https://..."></div>
           <div class="grid-2">
             <div class="form-group"><label>ชื่อระบบท้ายเว็บ:</label><input type="text" id="ftTitleInput" class="form-control" placeholder="เช่น ระบบสื่อการเรียนรู้"></div>
             <div class="form-group"><label>รหัสวิชา / โครงการ:</label><input type="text" id="ftSubjectInput" class="form-control" placeholder="เช่น รายวิชา CEE3501"></div>
-            <div class="form-group" style="grid-column: span 2;"><label>รายชื่อสมาชิก (ขึ้นบรรทัดใหม่ได้):</label><textarea id="ftMembersInput" class="form-control" rows="3"></textarea></div>
-            <div class="form-group" style="grid-column: span 2;"><label>URL รูปภาพ Barcode/QR Code:</label><input type="url" id="ftBarcodeInput" class="form-control" placeholder="https://..."></div>
+            <div class="form-group" style="grid-column: span 2;"><label>จัดทำโดย (รายชื่อสมาชิก ขึ้นบรรทัดใหม่ได้):</label><textarea id="ftMembersInput" class="form-control" rows="3"></textarea></div>
+            <div class="form-group" style="grid-column: span 2;"><label>URL รูปภาพ QR Code / Barcode (ขวาสุด):</label><input type="url" id="ftBarcodeInput" class="form-control" placeholder="https://..."></div>
           </div>
           <button class="btn-blue" style="width:100%;" onclick="saveSiteSettings('data')">💾 บันทึกข้อมูลและเมนู</button>
         </div>
@@ -306,7 +315,7 @@
           <div class="form-group"><label>เลือกเมนูปลายทาง:</label><select id="categorySelect" class="form-control" onchange="toggleAdminFields()"></select></div>
           <div class="form-group"><label>ชื่อเรื่อง / หัวข้อ (ไม่บังคับใส่):</label><input type="text" id="title" class="form-control" placeholder="ปล่อยว่างได้..."></div>
           
-          <div id="div-indicator" style="display: none; background: #fff; padding: 15px; border-radius: 10px; border: 1px solid #d1d5db; margin-bottom: 20px;">
+          <div id="div-indicator" style="display: none; background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
             <div class="form-group"><label>มาตรฐาน:</label><textarea id="standardInput" class="form-control" rows="2"></textarea></div>
             <div class="form-group" style="margin:0;"><label>ตัวชี้วัด:</label><textarea id="indicatorInput" class="form-control" rows="2"></textarea></div>
           </div>
@@ -315,27 +324,21 @@
           <div class="form-group"><label>รูปลายหน้าปก (ถ้ามี):</label><input type="url" id="imgUrl" class="form-control" placeholder="https://..."></div>
           <div class="form-group"><label>ลิงก์ไฟล์เสียงบรรยาย (MP3/M4A):</label><input type="url" id="audioUrl" class="form-control" placeholder="https://..."></div>
           
-          <!-- ระบบเพิ่มช่องฝังสื่อแบบ Dynamic -->
           <div style="background:#f0fdf4; padding:20px; border-radius:12px; border: 1px solid #bbf7d0; margin-bottom:20px;">
-            <label style="font-weight:600; color:#16a34a;">โค้ดฝังสื่อ (Canva, YouTube, Wordwall) หรือเฉลยใบงาน:</label>
+            <label style="font-weight:600; color:#16a34a;">โค้ดฝังสื่อ (รับโค้ด iframe หรือ YouTube link):</label>
             <div id="embedInputsContainer">
-              <textarea class="form-control embed-input" rows="2" placeholder="วางลิงก์ YouTube หรือ โค้ด iframe ที่นี่..." style="margin-top:10px;"></textarea>
+              <textarea class="form-control embed-input" rows="2" placeholder="วางลิงก์ YouTube หรือ โค้ด <iframe...> ที่นี่..." style="margin-top:10px;"></textarea>
             </div>
             <button class="btn-green" style="background:#22c55e; width:auto; font-size:13px; margin-top:10px;" onclick="addEmbedField()">➕ เพิ่มช่องใส่สื่ออีก</button>
-            <p style="font-size:13px; color:#475569; margin-top:10px;">*หากอยู่ในหมวด "เกม" หรือมีหลายสื่อ ระบบจะจัดเป็น 2 คอลัมน์ให้อัตโนมัติเมื่อแสดงผล</p>
           </div>
-          
           <button class="btn-blue" style="width:100%; font-size:18px;" onclick="saveMedia()">🚀 อัปโหลดสื่อขึ้นเว็บไซต์</button>
         </div>
 
-        <!-- Tab 4: จัดการสื่อ (ลบสื่อ) -->
+        <!-- Tab 4: จัดการสื่อ -->
         <div id="tab-manage" class="admin-panel">
           <h2 class="panel-title">🗑️ จัดการและลบสื่อ</h2>
-          <p style="color:#64748b;">รายการสื่อทั้งหมดในระบบ (เรียงตามล่าสุด)</p>
           <div style="overflow-x: auto;">
-            <table class="media-table" id="mediaTableBody">
-              <!-- ข้อมูลตารางจะถูกดึงมาใส่ตรงนี้ -->
-            </table>
+            <table class="media-table" id="mediaTableBody"></table>
           </div>
         </div>
 
@@ -362,11 +365,11 @@
     let currentCategoryView = 'all';
     
     let siteData = {
-      title: "ระบบสื่อการเรียนการสอน", subtitle: "โมเดลห้องเรียนแห่งความสุข",
+      title: "ระบบสื่อการเรียนรู้ภาษาถิ่น", subtitle: "CEE3501 นวัตกรรมและเทคโนโลยีการจัดการเรียนรู้",
       themePrimary: "#4f46e5", themeSecondary: "#3b82f6", splashC1: "#4f46e5", splashC2: "#3b82f6", themeFont: "'Prompt', sans-serif",
-      splashImg: "", splashTitle: "ยินดีต้อนรับนักเรียนชั้น ป.6", splashSubtitle: "เรื่อง ภาษาถิ่น",
+      splashImg: "", splashTitle: "ยินดีต้อนรับนักเรียน", splashSubtitle: "เรื่อง ภาษาถิ่น",
       btnText: "เข้าสู่เว็บไซต์", btnIcon: "🚀", btnBorder: "#ffffff", btnTextColor: "#4f46e5",
-      ftTitle: "ระบบสื่อการเรียนรู้", ftSubject: "รายวิชา CEE3501 นวัตกรรมและเทคโนโลยีฯ", ftMembers: "1. \n2. ", ftBarcode: "",
+      ftLogo: "", ftTitle: "ระบบสื่อการเรียนรู้", ftSubject: "รหัสวิชา: -", ftMembers: "", ftBarcode: "",
       menus: [{ id: "indicator", name: "🎯 มาตรฐานและตัวชี้วัด" }, { id: "content", name: "📖 เนื้อหาบทเรียน" }, { id: "game", name: "🎮 เกมการศึกษา" }]
     };
 
@@ -382,14 +385,18 @@
       else { pwd.type = 'password'; eye.innerHTML = '👁️'; }
     }
 
+    // แก้บั๊ก getCategoryName is not defined ให้อยู่ถูกที่
+    function getCategoryName(id) {
+      const menu = siteData.menus.find(m => m.id === id); return menu ? menu.name : 'ไม่ระบุหมวดหมู่';
+    }
+
     db.collection("settings").doc("siteConfig").get().then((doc) => {
       if (doc.exists) siteData = { ...siteData, ...doc.data() };
-      document.getElementById('student-view').style.display = 'flex'; // Show site after load
+      document.getElementById('student-view').style.display = 'flex';
       applySettings();
     });
 
     function applySettings() {
-      // CSS Vars
       document.documentElement.style.setProperty('--primary', siteData.themePrimary);
       document.documentElement.style.setProperty('--secondary', siteData.themeSecondary);
       document.documentElement.style.setProperty('--splash-c1', siteData.splashC1 || siteData.themePrimary);
@@ -398,7 +405,6 @@
       document.documentElement.style.setProperty('--btn-border', siteData.btnBorder);
       document.documentElement.style.setProperty('--btn-text', siteData.btnTextColor);
       
-      // Splash
       const imgEl = document.getElementById('splashImgDisplay'); const textGroup = document.getElementById('splashTextGroup');
       if(siteData.splashImg) { imgEl.src = siteData.splashImg; imgEl.style.display = 'block'; textGroup.style.display = 'none'; } 
       else { imgEl.style.display = 'none'; textGroup.style.display = 'block'; }
@@ -407,16 +413,19 @@
       document.getElementById('splashBtnTextDisplay').innerText = siteData.btnText;
       document.getElementById('splashIconDisplay').innerText = siteData.btnIcon;
       
-      // Header & Footer
+      // ส่วนหัว
       document.getElementById('displayTitle').innerText = siteData.title; document.getElementById('displaySubtitle').innerText = siteData.subtitle;
+      
+      // ส่วนท้าย (Footer)
+      const logoEl = document.getElementById('ftLogoImg');
+      if(siteData.ftLogo) { logoEl.src = siteData.ftLogo; logoEl.style.display = 'block'; } else { logoEl.style.display = 'none'; }
       document.getElementById('ftTitleDisplay').innerText = siteData.ftTitle || 'ระบบสื่อการเรียนรู้';
       document.getElementById('ftSubjectDisplay').innerText = siteData.ftSubject || '';
       document.getElementById('ftMembersDisplay').innerHTML = (siteData.ftMembers || '').replace(/\n/g, '<br>');
       const bcImg = document.getElementById('ftBarcodeImg');
-      if(siteData.ftBarcode) { bcImg.src = siteData.ftBarcode; document.getElementById('ftBarcodeBlock').style.display = 'block'; } 
-      else { document.getElementById('ftBarcodeBlock').style.display = 'none'; }
+      if(siteData.ftBarcode) { bcImg.src = siteData.ftBarcode; bcImg.style.display = 'block'; } else { bcImg.style.display = 'none'; }
 
-      // Menus
+      // เมนู
       let menuHtml = `<button class="nav-btn ${currentCategoryView==='all' ? 'active':''}" onclick="loadAllMediaFeed()">🏠 หน้าแรก (ฟีดรวม)</button>`; 
       let selectHtml = ''; let adminMenuHtml = '';
       siteData.menus.forEach((menu, index) => {
@@ -426,9 +435,9 @@
           <div class="menu-list-item">
             <span>${menu.name}</span>
             <div class="menu-actions">
-              ${index > 0 ? `<button style="background:#e2e8f0;" onclick="moveMenu(${index}, -1)">⬆️</button>` : ''}
-              ${index < siteData.menus.length - 1 ? `<button style="background:#e2e8f0;" onclick="moveMenu(${index}, 1)">⬇️</button>` : ''}
-              <button style="background:#fca5a5; color:white;" onclick="deleteMenu(${index})">ลบ</button>
+              ${index > 0 ? `<button style="background:#e2e8f0; color:#475569;" onclick="moveMenu(${index}, -1)">⬆️</button>` : ''}
+              ${index < siteData.menus.length - 1 ? `<button style="background:#e2e8f0; color:#475569;" onclick="moveMenu(${index}, 1)">⬇️</button>` : ''}
+              <button style="background:#ef4444; color:white;" onclick="deleteMenu(${index})">ลบ</button>
             </div>
           </div>`;
       });
@@ -436,8 +445,9 @@
       document.getElementById('categorySelect').innerHTML = selectHtml;
       document.getElementById('adminMenuList').innerHTML = adminMenuHtml;
 
-      // Populate Admin Forms
-      ['themePrimary', 'themeSecondary', 'splashC1', 'splashC2', 'themeFont', 'splashImg', 'splashTitle', 'splashSubtitle', 'btnText', 'btnIcon', 'btnBorderColor', 'btnTextColor', 'siteTitle', 'siteSubtitle', 'ftTitle', 'ftSubject', 'ftMembers', 'ftBarcode'].forEach(key => {
+      // ใส่ค่ากลับเข้าฟอร์ม
+      const fields = ['themePrimary', 'themeSecondary', 'splashC1', 'splashC2', 'themeFont', 'splashImg', 'splashTitle', 'splashSubtitle', 'btnText', 'btnIcon', 'btnBorderColor', 'btnTextColor', 'siteTitle', 'siteSubtitle', 'ftLogo', 'ftTitle', 'ftSubject', 'ftMembers', 'ftBarcode'];
+      fields.forEach(key => {
         const inputId = key.replace('Color', '') + (key.includes('Select') ? '' : 'Input');
         const el = document.getElementById(inputId) || document.getElementById(key + 'Select');
         if(el) el.value = siteData[key] || '';
@@ -474,21 +484,19 @@
     function verifyLogin() {
       if(document.getElementById('adminPwdInput').value === "1234") {
         isAdminLoggedIn = true; closeModal('modal-login');
-        document.getElementById('student-view').style.display = 'none';
-        document.getElementById('admin-dashboard').style.display = 'block';
+        document.getElementById('student-view').style.display = 'none'; document.getElementById('admin-dashboard').style.display = 'block';
         document.getElementById('adminPwdInput').value = '';
       } else { customAlert("ผิดพลาด", "รหัสผ่านไม่ถูกต้อง!", "❌"); }
     }
     
     function logoutAdmin() {
       isAdminLoggedIn = false; 
-      document.getElementById('admin-dashboard').style.display = 'none';
-      document.getElementById('student-view').style.display = 'flex';
+      document.getElementById('admin-dashboard').style.display = 'none'; document.getElementById('student-view').style.display = 'flex';
       customAlert("ออกจากระบบ", "กลับสู่หน้าเว็บไซต์นักเรียน", "🚪");
       loadAllMediaFeed(); 
     }
 
-    function saveSiteSettings(type) {
+    function saveSiteSettings() {
       siteData.themePrimary = document.getElementById('themePrimaryInput').value; siteData.themeSecondary = document.getElementById('themeSecondaryInput').value;
       siteData.splashC1 = document.getElementById('splashC1Input').value; siteData.splashC2 = document.getElementById('splashC2Input').value;
       siteData.themeFont = document.getElementById('themeFontSelect').value; siteData.splashImg = document.getElementById('splashImgInput').value;
@@ -496,8 +504,9 @@
       siteData.btnText = document.getElementById('btnTextInput').value; siteData.btnIcon = document.getElementById('btnIconInput').value;
       siteData.btnBorder = document.getElementById('btnBorderColor').value; siteData.btnTextColor = document.getElementById('btnTextColor').value;
       siteData.title = document.getElementById('siteTitleInput').value; siteData.subtitle = document.getElementById('siteSubtitleInput').value;
-      siteData.ftTitle = document.getElementById('ftTitleInput').value; siteData.ftSubject = document.getElementById('ftSubjectInput').value;
-      siteData.ftMembers = document.getElementById('ftMembersInput').value; siteData.ftBarcode = document.getElementById('ftBarcodeInput').value;
+      siteData.ftLogo = document.getElementById('ftLogoInput').value; siteData.ftTitle = document.getElementById('ftTitleInput').value;
+      siteData.ftSubject = document.getElementById('ftSubjectInput').value; siteData.ftMembers = document.getElementById('ftMembersInput').value; siteData.ftBarcode = document.getElementById('ftBarcodeInput').value;
+      
       db.collection("settings").doc("siteConfig").set(siteData).then(() => { customAlert("บันทึกสำเร็จ!", "อัปเดตการตั้งค่าเรียบร้อยแล้ว", "💾"); applySettings(); });
     }
 
@@ -505,20 +514,18 @@
     function moveMenu(index, dir) { const temp = siteData.menus[index]; siteData.menus[index] = siteData.menus[index + dir]; siteData.menus[index + dir] = temp; db.collection("settings").doc("siteConfig").set(siteData).then(applySettings); }
     function deleteMenu(index) { document.getElementById('confirmDeleteBtn').onclick = function() { siteData.menus.splice(index, 1); db.collection("settings").doc("siteConfig").set(siteData).then(() => { closeModal('modal-confirm'); applySettings(); }); }; showModal('modal-confirm'); }
 
-    // ================= การโหลดสื่อนักเรียน (ยึดตามเมนู) =================
+    // ================= โหลดสื่อนักเรียน =================
     function buildCardHtml(data) {
       let imgHTML = data.imgUrl ? `<img src="${data.imgUrl}" class="card-image">` : '';
       let stdHtml = data.standard ? `<div class="info-box"><h4>🎯 มาตรฐาน:</h4><p>${data.standard.replace(/\n/g, '<br>')}</p></div>` : '';
       let indHtml = data.indicator ? `<div class="info-box"><h4>📌 ตัวชี้วัด:</h4><p>${data.indicator.replace(/\n/g, '<br>')}</p></div>` : '';
-      let descHTML = data.description ? `<p style="line-height:1.6; color:#4b5563;">${data.description.replace(/\n/g, '<br>')}</p>` : '';
+      let descHTML = data.description ? `<p style="line-height:1.6; color:#475569;">${data.description.replace(/\n/g, '<br>')}</p>` : '';
       let audioHtml = data.audioUrl ? `<audio controls src="${data.audioUrl}"></audio>` : '';
       
       let embedsHtml = '';
       if(data.embedCodes && data.embedCodes.length > 0) {
-        // ถัามีหลายไฟล์ หรือเป็นหมวดเกม ให้ใช้ Grid 2 คอลัมน์
         let useGrid = data.embedCodes.length > 1 || (data.category && data.category.includes('game'));
-        let gridClass = useGrid ? 'media-grid' : '';
-        embedsHtml = `<div class="${gridClass}">${data.embedCodes.join('')}</div>`;
+        embedsHtml = `<div class="${useGrid ? 'media-grid' : ''}">${data.embedCodes.join('')}</div>`;
       }
 
       let infoContent = stdHtml + indHtml + descHTML + audioHtml;
@@ -534,12 +541,11 @@
       display.innerHTML = "<div style='text-align:center; padding: 50px;'><h3>กำลังจัดเรียงเนื้อหา... ⏳</h3></div>";
       
       const snapshot = await db.collection("medias").orderBy("timestamp", "desc").get();
-      const allMedia = []; snapshot.forEach(doc => allMedia.push(doc.data()));
+      const allMedia = []; snapshot.forEach(doc => { let d = doc.data(); d.id = doc.id; allMedia.push(d); });
       
       let html = "";
       if(allMedia.length === 0) html = "<div class='card' style='text-align:center;'>ยังไม่มีเนื้อหาในระบบค่ะ</div>";
       else {
-        // จัดเรียงตามลำดับ Menu เป๊ะๆ
         siteData.menus.forEach(menu => {
           const catMedia = allMedia.filter(m => m.category === menu.id);
           if(catMedia.length > 0) {
@@ -553,7 +559,7 @@
 
     function loadMedia(categoryId) {
       currentCategoryView = categoryId; applySettings();
-      const menuName = siteData.menus.find(m => m.id === categoryId)?.name || '';
+      const menuName = getCategoryName(categoryId);
       const display = document.getElementById('display-section');
       db.collection("medias").where("category", "==", categoryId).orderBy("timestamp", "desc").get().then((snap) => {
           let html = `<h2 class='feed-category-header'>${menuName}</h2>`;
@@ -572,6 +578,7 @@
       container.appendChild(ta);
     }
 
+    // แก้บั๊ก Embed ไม่ติด (รองรับทั้ง iframe จาก Canva/Wordwall และลิงก์ Youtube)
     function saveMedia() {
       let title = document.getElementById('title').value; let cat = document.getElementById('categorySelect').value;
       let std = document.getElementById('standardInput').value; let ind = document.getElementById('indicatorInput').value;
@@ -582,9 +589,19 @@
       document.querySelectorAll('.embed-input').forEach(inp => {
         let val = inp.value.trim();
         if(val) {
-          if(val.includes("youtube.com/watch?v=")) val = `<iframe src="https://www.youtube.com/embed/${val.split("v=")[1].substring(0, 11)}" allowfullscreen></iframe>`;
-          else if (val.includes("youtu.be/")) val = `<iframe src="https://www.youtube.com/embed/${val.split("youtu.be/")[1].substring(0, 11)}" allowfullscreen></iframe>`;
-          embedCodes.push(val);
+          // ถ้ามี <iframe อยู่แล้ว แปลว่าเป็นโค้ดฝัง ให้เก็บไว้เลยไม่แก้ไข
+          if(val.toLowerCase().includes("<iframe")) {
+            embedCodes.push(val);
+          } 
+          // แปลง Youtube Link เป็น iframe อัตโนมัติ
+          else if(val.includes("youtube.com/watch?v=")) {
+            embedCodes.push(`<iframe src="https://www.youtube.com/embed/${val.split("v=")[1].substring(0, 11)}" allowfullscreen></iframe>`);
+          } else if (val.includes("youtu.be/")) {
+            embedCodes.push(`<iframe src="https://www.youtube.com/embed/${val.split("youtu.be/")[1].substring(0, 11)}" allowfullscreen></iframe>`);
+          } else {
+            // ถ้าเป็นลิงก์อื่นๆ ก็เก็บไว้
+            embedCodes.push(val);
+          }
         }
       });
 
@@ -594,7 +611,7 @@
       }).then(() => {
         customAlert("อัปโหลดสำเร็จ!", "เพิ่มสื่อการเรียนรู้ขึ้นระบบแล้ว", "🎉");
         ['title', 'standardInput', 'indicatorInput', 'description', 'imgUrl', 'audioUrl'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('embedInputsContainer').innerHTML = '<textarea class="form-control embed-input" rows="2" placeholder="วางลิงก์ YouTube หรือ โค้ด iframe ที่นี่..." style="margin-top:10px;"></textarea>';
+        document.getElementById('embedInputsContainer').innerHTML = '<textarea class="form-control embed-input" rows="2" placeholder="วางลิงก์ YouTube หรือ โค้ด <iframe...> ที่นี่..." style="margin-top:10px;"></textarea>';
       });
     }
 
@@ -610,7 +627,7 @@
           const date = d.timestamp ? new Date(d.timestamp.toDate()).toLocaleDateString('th-TH') : '';
           html += `<tr>
             <td><strong>${d.title || '(ไม่มีชื่อหัวข้อ)'}</strong><br><small style="color:#64748b;">${d.description ? d.description.substring(0,30)+'...' : 'มีไฟล์สื่อ'}</small></td>
-            <td><span style="background:#eef2ff; color:#4f46e5; padding:4px 8px; border-radius:4px; font-size:13px;">${catName}</span></td>
+            <td><span style="background:#e2e8f0; color:#475569; padding:4px 8px; border-radius:4px; font-size:13px;">${catName}</span></td>
             <td style="color:#64748b; font-size:14px;">${date}</td>
             <td><button style="background:#ef4444; color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer;" onclick="promptDeleteMedia('${doc.id}')">ลบ</button></td>
           </tr>`;
@@ -623,7 +640,7 @@
       document.getElementById('confirmDeleteBtn').onclick = function() {
         db.collection("medias").doc(docId).delete().then(() => {
           closeModal('modal-confirm'); customAlert("ลบสำเร็จ", "ลบสื่อออกจากฐานข้อมูลแล้ว", "🗑️");
-          loadMediaTableAdmin(); // รีเฟรชตาราง
+          loadMediaTableAdmin(); // รีเฟรชตารางหลังบ้านแบบเรียลไทม์
         });
       };
       showModal('modal-confirm');
