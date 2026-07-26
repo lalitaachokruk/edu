@@ -61,17 +61,16 @@
     .nav-btn:hover, .nav-btn.active { background: var(--primary); color: white; transform: translateY(-3px); }
 
     .container { flex: 1; max-width: 1000px; margin: 40px auto; padding: 0 20px; width: 100%; box-sizing: border-box; }
-    /* ================= แถบหมวดหมู่หน้าแรก (กดเพื่อวาร์ป) ================= */
+    /* ================= ปุ่มหมวดหมู่หน้าแรก (มินิมอล & กดได้) ================= */
     .feed-category-header { 
-      background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-      color: white; padding: 12px 30px; border-radius: 50px; margin: 40px auto 20px auto; 
-      font-size: 20px; font-weight: 600; box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-      display: inline-block; text-align: center; 
-      cursor: pointer; transition: all 0.3s ease; 
+      background: white; color: var(--primary); border: 2px solid var(--primary);
+      padding: 8px 20px; border-radius: 50px; margin: 30px 0 15px 0; 
+      font-size: 18px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+      cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
     }
     .feed-category-header:hover { 
-      transform: translateY(-3px) scale(1.05); 
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+      background: var(--primary); color: white; transform: translateY(-3px); 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
     }
     .view-all-badge { 
       font-size: 14px; background: rgba(255,255,255,0.25); padding: 5px 15px; 
@@ -548,15 +547,37 @@
       currentCategoryView = 'all'; applySettings();
       const display = document.getElementById('display-section');
       display.innerHTML = "<div style='text-align:center; padding: 50px;'><h3>กำลังจัดเรียงเนื้อหา... ⏳</h3></div>";
+      
       const snapshot = await db.collection("medias").orderBy("timestamp", "desc").get();
       const allMedia = []; snapshot.forEach(doc => { let d = doc.data(); d.id = doc.id; allMedia.push(d); });
+      
       let html = "";
-      if(allMedia.length === 0) html = "<div class='card' style='text-align:center;'>ยังไม่มีเนื้อหาในระบบค่ะ</div>";
-      else {
+      
+      // ✨ ลูกเล่นใหม่: เพิ่ม Hero Banner ด้านบนสุดของหน้าแรก (ดึงรูปปกมาแสดง)
+      if(siteData.splashImg) {
+        html += `
+          <div style="margin-bottom: 40px; animation: fadeIn 0.6s; text-align: center;">
+            <img src="${siteData.splashImg}" style="max-width: 100%; max-height: 400px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); object-fit: contain; background: white; padding: 10px;">
+          </div>
+        `;
+      } else {
+        // ถ้าไม่มีรูปปก ให้แสดงกล่องข้อความต้อนรับสวยๆ แทน
+        html += `
+          <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 40px 30px; border-radius: 20px; text-align: center; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); animation: fadeIn 0.6s;">
+            <h2 style="margin: 0 0 10px 0; font-size: 28px;">${siteData.title}</h2>
+            <p style="margin: 0; font-size: 18px; opacity: 0.9;">ยินดีต้อนรับเข้าสู่บทเรียน เลือกหมวดหมู่ด้านล่างเพื่อเริ่มเรียนได้เลย!</p>
+          </div>
+        `;
+      }
+
+      if(allMedia.length === 0) {
+        html += "<div class='card' style='text-align:center;'>ยังไม่มีเนื้อหาในระบบค่ะ</div>";
+      } else {
         siteData.menus.forEach(menu => {
           const catMedia = allMedia.filter(m => m.category === menu.id);
           if(catMedia.length > 0) {
-            html += `<div class='feed-category-header' onclick="loadMedia('${menu.id}')" title="คลิกเพื่อสลับไปหน้าหมวดหมู่นี้">${menu.name}</div>`;
+            // ปุ่มหมวดหมู่แบบใหม่ ใส่ไอคอนโฟลเดอร์ให้ดูน่ากดขึ้น
+            html += `<div class='feed-category-header' onclick="loadMedia('${menu.id}')" title="คลิกเพื่อดูหมวดหมู่นี้ทั้งหมด">📂 ${menu.name}</div>`;
             catMedia.forEach(data => { html += buildCardHtml(data); });
           }
         });
