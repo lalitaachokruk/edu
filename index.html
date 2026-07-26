@@ -4,19 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ระบบสื่อการเรียนรู้</title>
+  
   <!-- โลโก้แถบเบราว์เซอร์ และ ไอคอนแอปพลิเคชันบน Apple -->
   <link rel="icon" type="image/png" href="https://i.postimg.cc/RhyMD2xC/Chat-GPT-Image-26-k-kh-2569-16-09-09.png">
   <link rel="apple-touch-icon" href="https://i.postimg.cc/RhyMD2xC/Chat-GPT-Image-26-k-kh-2569-16-09-09.png">
   <meta name="apple-mobile-web-app-title" content="สื่อภาษาถิ่น">
+
   <!-- ป้องกันไม่ให้ Google และ Search Engine อื่นๆ เข้ามาค้นหาและบันทึกเว็บไซต์นี้ -->
   <meta name="robots" content="noindex, nofollow">
-  
+
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Mali:wght@400;600&family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
   
   <style>
     :root {
       --primary: #4f46e5; --secondary: #3b82f6; --bg: #f8fafc; --text: #1e293b;
       --splash-c1: #4f46e5; --splash-c2: #3b82f6;
+      --banner-bg: #eef2ff; --banner-text: #4338ca;
       --font-main: 'Prompt', sans-serif;
       --btn-border: #ffffff; --btn-text: #4f46e5;
     }
@@ -61,21 +64,8 @@
     .nav-btn:hover, .nav-btn.active { background: var(--primary); color: white; transform: translateY(-3px); }
 
     .container { flex: 1; max-width: 1000px; margin: 40px auto; padding: 0 20px; width: 100%; box-sizing: border-box; }
-    /* ================= ปุ่มหมวดหมู่หน้าแรก (มินิมอล & กดได้) ================= */
-    .feed-category-header { 
-      background: white; color: var(--primary); border: 2px solid var(--primary);
-      padding: 8px 20px; border-radius: 50px; margin: 30px 0 15px 0; 
-      font-size: 18px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
-      cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-    }
-    .feed-category-header:hover { 
-      background: var(--primary); color: white; transform: translateY(-3px); 
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
-    }
-    .view-all-badge { 
-      font-size: 14px; background: rgba(255,255,255,0.25); padding: 5px 15px; 
-      border-radius: 50px; font-weight: 400; backdrop-filter: blur(5px);
-    }
+    .feed-category-header { background: var(--primary); color: white; padding: 8px 20px; border-radius: 10px; margin: 40px 0 20px 0; font-size: 18px; display: inline-block; cursor: pointer; transition: 0.3s; }
+    .feed-category-header:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
     
     .card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; }
     .card-title { font-size: 22px; color: var(--primary); margin: 0 0 15px 0; }
@@ -87,8 +77,8 @@
     .media-grid iframe, .media-container iframe { width: 100%; height: 450px; border: none; border-radius: 12px; background: #f1f5f9; margin-top: 10px; }
     audio { width: 100%; margin-top: 15px; outline: none; }
 
-    /* ================= ท้ายเว็บไซต์ (Footer Minimal Pro) ================= */
-    footer { background: white; margin-top: 50px; border-top: 1px solid #e2e8f0; padding: 30px 20px; }
+    /* ================= ท้ายเว็บไซต์ (Footer Minimal) ================= */
+    footer { background: white; margin-top: 40px; border-top: 1px solid #e2e8f0; padding: 30px 20px; }
     .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
     
     .footer-left { display: flex; align-items: center; gap: 20px; }
@@ -107,7 +97,7 @@
       .footer-right { margin-top: 10px; width: 100%; justify-content: center; display: flex; }
     }
 
-    /* ================= ระบบหลังบ้าน (Minimal White) ================= */
+    /* ================= ระบบหลังบ้าน ================= */
     #admin-dashboard { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; background: #f8fafc; z-index: 20000; }
     .dashboard-layout { display: flex; width: 100%; height: 100%; }
     
@@ -214,10 +204,9 @@
       <div id="display-section"></div>
     </div>
     
-    <!-- Footer ท้ายเว็บไซต์ (อัปเกรดแยกซ้ายขวา) -->
+    <!-- Footer ท้ายเว็บไซต์ -->
     <footer>
       <div class="footer-content">
-        <!-- ฝั่งซ้าย: โลโก้ และ ข้อมูลรายวิชา -->
         <div class="footer-left">
           <img id="ftLogoImg" src="" alt="Logo">
           <div class="footer-text">
@@ -225,8 +214,6 @@
             <p id="ftSubjectDisplay">CEE3501 ...</p>
           </div>
         </div>
-        
-        <!-- ฝั่งขวา: จัดทำโดย และ QR Code วางในกรอบแคปซูล -->
         <div class="footer-right">
           <div class="footer-prepared">
             <span>จัดทำโดย</span>
@@ -237,10 +224,10 @@
     </footer>
   </div>
 
-  <!-- ================= ระบบหลังบ้าน (Minimal White) ================= -->
+  <!-- ================= ระบบหลังบ้าน ================= -->
   <div id="admin-dashboard">
     <div class="dashboard-layout">
-      <!-- Sidebar สีขาวมินิมอล -->
+      <!-- Sidebar -->
       <div class="sidebar">
         <div class="sidebar-brand">
           <h2>แผงควบคุมระบบ</h2>
@@ -275,10 +262,10 @@
           </div>
           <button class="btn-blue" onclick="saveDesign()">💾 บันทึกสีและฟอนต์</button>
 
-          <div class="section-divider">2. ภาพปกและสีพื้นหลัง (หน้าต้อนรับ)</div>
+          <div class="section-divider">2. ภาพปกและสีพื้นหลัง (หน้าต้อนรับ Splash Screen)</div>
           <div class="grid-2">
-            <div class="form-group"><label>สีพื้นหลังหน้าปก (ซ้าย):</label><input type="color" id="splashC1Input" class="form-control" style="height:40px; padding:2px;"></div>
-            <div class="form-group"><label>สีพื้นหลังหน้าปก (ขวา):</label><input type="color" id="splashC2Input" class="form-control" style="height:40px; padding:2px;"></div>
+            <div class="form-group"><label>สีหน้าปก (ซ้าย):</label><input type="color" id="splashC1Input" class="form-control" style="height:40px; padding:2px;"></div>
+            <div class="form-group"><label>สีหน้าปก (ขวา):</label><input type="color" id="splashC2Input" class="form-control" style="height:40px; padding:2px;"></div>
           </div>
           <div class="form-group"><label>URL ภาพ Banner (ถ้าใส่ จะซ่อนตัวหนังสือ):</label><input type="url" id="splashImgInput" class="form-control"></div>
           <div class="grid-2">
@@ -287,7 +274,15 @@
           </div>
           <button class="btn-blue" onclick="saveSplash()">💾 บันทึกหน้าต้อนรับ</button>
 
-          <div class="section-divider">3. ปุ่มเข้าสู่เว็บไซต์</div>
+          <!-- 🌟 ส่วนที่เพิ่มเข้ามาใหม่: แถบป้ายต้อนรับหน้าแรก -->
+          <div class="section-divider">3. แถบป้ายต้อนรับ (หน้าแรกของเว็บ)</div>
+          <div class="grid-2">
+            <div class="form-group"><label>สีพื้นหลังป้ายต้อนรับ:</label><input type="color" id="bannerBgInput" class="form-control" style="height:40px; padding:2px;"></div>
+            <div class="form-group"><label>สีตัวหนังสือ:</label><input type="color" id="bannerTextInput" class="form-control" style="height:40px; padding:2px;"></div>
+          </div>
+          <button class="btn-blue" onclick="saveBannerDesign()">💾 บันทึกป้ายต้อนรับ</button>
+
+          <div class="section-divider">4. ปุ่มเข้าสู่เว็บไซต์</div>
           <div class="grid-2">
             <div class="form-group"><label>ข้อความปุ่ม:</label><input type="text" id="btnTextInput" class="form-control"></div>
             <div class="form-group"><label>ไอคอนปุ่ม:</label><input type="text" id="btnIconInput" class="form-control"></div>
@@ -380,9 +375,11 @@
     let isAdminLoggedIn = false;
     let currentCategoryView = 'all';
     
+    // ตั้งค่าเริ่มต้น: แบนเนอร์หน้าแรกเป็นสีฟ้าพาสเทล ตัดกับหนังสือสีเข้ม
     let siteData = {
       title: "ระบบสื่อการเรียนรู้ภาษาถิ่น", subtitle: "CEE3501 นวัตกรรมและเทคโนโลยีการจัดการเรียนรู้",
       themePrimary: "#4f46e5", themeSecondary: "#3b82f6", splashC1: "#4f46e5", splashC2: "#3b82f6", themeFont: "'Prompt', sans-serif",
+      bannerBg: "#eef2ff", bannerText: "#4338ca", 
       splashImg: "", splashTitle: "ยินดีต้อนรับนักเรียน", splashSubtitle: "เรื่อง ภาษาถิ่น",
       btnText: "เข้าสู่เว็บไซต์", btnIcon: "🚀", btnBorder: "#ffffff", btnTextColor: "#4f46e5",
       ftLogo: "", ftTitle: "ระบบสื่อการเรียนรู้ภาษาถิ่น", ftSubject: "CEE3501 นวัตกรรมและเทคโนโลยีการจัดการเรียนรู้", ftBarcode: "",
@@ -411,6 +408,10 @@
       document.documentElement.style.setProperty('--btn-border', siteData.btnBorder || '#ffffff');
       document.documentElement.style.setProperty('--btn-text', siteData.btnTextColor || '#4f46e5');
       
+      // ตัวแปรสีแบนเนอร์
+      document.documentElement.style.setProperty('--banner-bg', siteData.bannerBg || '#eef2ff');
+      document.documentElement.style.setProperty('--banner-text', siteData.bannerText || '#4338ca');
+      
       const imgEl = document.getElementById('splashImgDisplay'); const textGroup = document.getElementById('splashTextGroup');
       if(siteData.splashImg) { imgEl.src = siteData.splashImg; imgEl.style.display = 'block'; textGroup.style.display = 'none'; } 
       else { imgEl.style.display = 'none'; textGroup.style.display = 'block'; }
@@ -422,7 +423,7 @@
       
       document.getElementById('displayTitle').innerText = siteData.title || ''; document.getElementById('displaySubtitle').innerText = siteData.subtitle || '';
       
-      // Footer Minimal แบบแยกซ้ายขวา
+      // Footer
       const logoEl = document.getElementById('ftLogoImg');
       if(siteData.ftLogo) { logoEl.src = siteData.ftLogo; logoEl.style.display = 'block'; } else { logoEl.style.display = 'none'; }
       document.getElementById('ftTitleDisplay').innerText = siteData.ftTitle || '';
@@ -449,8 +450,8 @@
       document.getElementById('categorySelect').innerHTML = selectHtml;
       document.getElementById('adminMenuList').innerHTML = adminMenuHtml;
 
-      // ใส่ค่ากลับเข้าฟอร์ม
-      const fields = ['themePrimary', 'themeSecondary', 'splashC1', 'splashC2', 'themeFont', 'splashImg', 'splashTitle', 'splashSubtitle', 'btnText', 'btnIcon', 'btnBorderColor', 'btnTextColor', 'siteTitle', 'siteSubtitle', 'ftLogo', 'ftTitle', 'ftSubject', 'ftBarcode'];
+      // อัปเดตฟอร์มแอดมิน
+      const fields = ['themePrimary', 'themeSecondary', 'splashC1', 'splashC2', 'themeFont', 'bannerBg', 'bannerText', 'splashImg', 'splashTitle', 'splashSubtitle', 'btnText', 'btnIcon', 'btnBorderColor', 'btnTextColor', 'siteTitle', 'siteSubtitle', 'ftLogo', 'ftTitle', 'ftSubject', 'ftBarcode'];
       fields.forEach(key => {
         const inputId = key.replace('Color', '') + (key.includes('Select') ? '' : 'Input');
         const el = document.getElementById(inputId) || document.getElementById(key + 'Select');
@@ -474,7 +475,6 @@
       setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; loadAllMediaFeed(); }, 800);
     }
 
-    // ระบบบันทึกแยกส่วน (แก้ปัญหาเซฟแล้วข้อมูลอื่นหาย)
     function updateSettingsDb(newData, successMsg) {
       db.collection("settings").doc("siteConfig").set(newData, { merge: true }).then(() => {
         siteData = { ...siteData, ...newData }; applySettings();
@@ -484,6 +484,10 @@
 
     function saveDesign() { updateSettingsDb({ themePrimary: document.getElementById('themePrimaryInput').value, themeSecondary: document.getElementById('themeSecondaryInput').value, themeFont: document.getElementById('themeFontSelect').value }, "อัปเดตสีและฟอนต์หลักของเว็บไซต์แล้ว"); }
     function saveSplash() { updateSettingsDb({ splashC1: document.getElementById('splashC1Input').value, splashC2: document.getElementById('splashC2Input').value, splashImg: document.getElementById('splashImgInput').value, splashTitle: document.getElementById('splashTitleInput').value, splashSubtitle: document.getElementById('splashSubtitleInput').value }, "อัปเดตหน้าปกต้อนรับแล้ว"); }
+    
+    // บันทึกสีป้ายต้อนรับ
+    function saveBannerDesign() { updateSettingsDb({ bannerBg: document.getElementById('bannerBgInput').value, bannerText: document.getElementById('bannerTextInput').value }, "อัปเดตสีป้ายต้อนรับหน้าแรกแล้ว"); }
+    
     function saveBtnStyle() { updateSettingsDb({ btnText: document.getElementById('btnTextInput').value, btnIcon: document.getElementById('btnIconInput').value, btnBorder: document.getElementById('btnBorderColor').value, btnTextColor: document.getElementById('btnTextColor').value }, "อัปเดตปุ่มเข้าสู่เว็บไซต์แล้ว"); }
     function saveHeader() { updateSettingsDb({ title: document.getElementById('siteTitleInput').value, subtitle: document.getElementById('siteSubtitleInput').value }, "อัปเดตชื่อเว็บไซต์แล้ว"); }
     function saveFooter() { updateSettingsDb({ ftLogo: document.getElementById('ftLogoInput').value, ftTitle: document.getElementById('ftTitleInput').value, ftSubject: document.getElementById('ftSubjectInput').value, ftBarcode: document.getElementById('ftBarcodeInput').value }, "อัปเดตข้อมูลท้ายเว็บไซต์แล้ว"); }
@@ -547,30 +551,26 @@
       currentCategoryView = 'all'; applySettings();
       const display = document.getElementById('display-section');
       display.innerHTML = "<div style='text-align:center; padding: 50px;'><h3>กำลังจัดเรียงเนื้อหา... ⏳</h3></div>";
-      
       const snapshot = await db.collection("medias").orderBy("timestamp", "desc").get();
       const allMedia = []; snapshot.forEach(doc => { let d = doc.data(); d.id = doc.id; allMedia.push(d); });
-      
       let html = "";
       
-      // ✨ แนวทางใหม่: แถบต้อนรับแนวยาวสไตล์ Google Classroom (ไม่ใช้รูป 16:9)
+      // ✨ แบนเนอร์ต้อนรับแบบใช้สีจากระบบ Admin ✨
       html += `
-        <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 20px; padding: 40px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); color: white; animation: fadeIn 0.6s;">
+        <div style="background: var(--banner-bg); border-radius: 20px; padding: 40px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); color: var(--banner-text); animation: fadeIn 0.6s; border: 1px solid rgba(0,0,0,0.05);">
           <div style="flex: 1;">
             <h2 style="margin: 0 0 10px 0; font-size: 26px;">พร้อมที่จะเรียนรู้หรือยังคะ? 🎒</h2>
             <p style="margin: 0; font-size: 16px; opacity: 0.9; line-height: 1.5;">เลื่อนลงเพื่อดูสื่ออัปเดตล่าสุด หรือคลิกที่ป้ายชื่อหมวดหมู่เพื่อกระโดดไปดูเนื้อหาเฉพาะด้านได้เลยค่ะ</p>
           </div>
-          <div style="font-size: 65px; margin-left: 20px; opacity: 0.9; text-shadow: 2px 4px 10px rgba(0,0,0,0.2);">📚</div>
+          <div style="font-size: 65px; margin-left: 20px; text-shadow: 2px 4px 10px rgba(0,0,0,0.1);">📚</div>
         </div>
       `;
 
-      if(allMedia.length === 0) {
-        html += "<div class='card' style='text-align:center;'>ยังไม่มีเนื้อหาในระบบค่ะ</div>";
-      } else {
+      if(allMedia.length === 0) html += "<div class='card' style='text-align:center;'>ยังไม่มีเนื้อหาในระบบค่ะ</div>";
+      else {
         siteData.menus.forEach(menu => {
           const catMedia = allMedia.filter(m => m.category === menu.id);
           if(catMedia.length > 0) {
-            // เอาไอคอนโฟลเดอร์ 📂 ออกแล้วค่ะ จะใช้แค่ชื่อเมนูของคุณเพียวๆ เลย
             html += `<div class='feed-category-header' onclick="loadMedia('${menu.id}')" title="คลิกเพื่อสลับไปหมวดหมู่นี้">${menu.name}</div>`;
             catMedia.forEach(data => { html += buildCardHtml(data); });
           }
