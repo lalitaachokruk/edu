@@ -17,7 +17,7 @@
     body { font-family: var(--font-main); background: var(--bg); margin: 0; padding: 0; color: var(--text); overflow-x: hidden; transition: background 0.3s; }
     input, textarea, select, button { font-family: inherit; }
 
-    /* ================= หน้าต่างต้อนรับ ================= */
+    /* ================= 1. หน้าต่างต้อนรับ ================= */
     #splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(135deg, var(--splash-c1), var(--splash-c2));
@@ -36,8 +36,9 @@
     @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .modal-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
     .modal-btn-group { display: flex; gap: 10px; justify-content: center; }
-    .btn-modal { padding: 10px 20px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 500; width: 100%; }
+    .btn-modal { padding: 10px 20px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; font-weight: 500; width: 100%; transition: 0.2s; }
     .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { opacity: 0.9; }
     .btn-danger { background: #ef4444; color: white; }
     .btn-cancel { background: #f1f5f9; color: #475569; }
 
@@ -65,19 +66,27 @@
     .media-grid iframe, .media-container iframe { width: 100%; height: 450px; border: none; border-radius: 12px; background: #f1f5f9; margin-top: 10px; }
     audio { width: 100%; margin-top: 15px; outline: none; }
 
-    /* ================= ท้ายเว็บไซต์ (Footer Minimal) ================= */
-    footer { background: white; margin-top: 40px; border-top: 1px solid #e2e8f0; padding: 25px 20px; }
-    .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
+    /* ================= ท้ายเว็บไซต์ (Footer Minimal Pro) ================= */
+    footer { background: white; margin-top: 50px; border-top: 1px solid #e2e8f0; padding: 30px 20px; }
+    .footer-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
     
-    #ftLogoImg { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0; display: none; }
-    .footer-text { display: flex; flex-direction: column; gap: 5px; }
-    .footer-text h3 { margin: 0; font-size: 18px; color: var(--primary); }
+    .footer-left { display: flex; align-items: center; gap: 20px; }
+    #ftLogoImg { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 3px solid #f1f5f9; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; }
+    .footer-text h3 { margin: 0 0 5px 0; font-size: 18px; color: var(--primary); font-weight: 600; }
     .footer-text p { margin: 0; font-size: 14px; color: #64748b; }
-    .footer-prepared { display: flex; align-items: center; gap: 15px; margin-top: 5px; }
+    
+    .footer-right { display: flex; align-items: center; }
+    .footer-prepared { display: flex; align-items: center; gap: 15px; background: #f8fafc; padding: 12px 25px; border-radius: 50px; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
     .footer-prepared span { font-size: 14px; color: #475569; font-weight: 500; }
-    #ftBarcodeImg { height: 45px; object-fit: contain; display: none; border-radius: 4px; }
+    #ftBarcodeImg { height: 45px; width: 45px; object-fit: contain; display: none; border-radius: 4px; }
 
-    /* ================= ระบบหลังบ้าน (Minimal Admin) ================= */
+    @media (max-width: 768px) {
+      .footer-content { flex-direction: column; text-align: center; justify-content: center; }
+      .footer-left { flex-direction: column; align-items: center; gap: 15px; }
+      .footer-right { margin-top: 10px; width: 100%; justify-content: center; display: flex; }
+    }
+
+    /* ================= ระบบหลังบ้าน (Minimal White) ================= */
     #admin-dashboard { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; background: #f8fafc; z-index: 20000; }
     .dashboard-layout { display: flex; width: 100%; height: 100%; }
     
@@ -106,12 +115,10 @@
     .btn-green { background: #10b981; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; transition: 0.2s; }
     .btn-blue { background: #3b82f6; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; }
 
-    /* จัดการเมนูมินิมอล */
     .menu-item-clean { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; align-items: center; }
     .menu-actions span { cursor: pointer; font-size: 13px; margin-left: 10px; color: #64748b; }
     .menu-actions span:hover { color: var(--primary); }
     .menu-actions span.del { color: #ef4444; }
-
     .section-divider { border-bottom: 1px solid #e2e8f0; margin: 30px 0; padding-bottom: 10px; font-size: 18px; color: var(--primary); font-weight: 600; }
 
     @media (max-width: 768px) {
@@ -119,8 +126,6 @@
       .sidebar { width: 100%; padding: 10px; border-right: none; border-bottom: 1px solid #e2e8f0; }
       .sidebar-menu { flex-direction: row; flex-wrap: wrap; }
       .admin-main { padding: 15px; }
-      .footer-content { flex-direction: column; text-align: center; }
-      .footer-prepared { justify-content: center; }
     }
   </style>
 </head>
@@ -188,13 +193,20 @@
       <div id="display-section"></div>
     </div>
     
-    <!-- Footer ท้ายเว็บไซต์แบบ Minimal สุดๆ ตามแบบ -->
+    <!-- Footer ท้ายเว็บไซต์ (อัปเกรดแยกซ้ายขวา) -->
     <footer>
       <div class="footer-content">
-        <img id="ftLogoImg" src="" alt="Logo">
-        <div class="footer-text">
-          <h3 id="ftTitleDisplay">ระบบสื่อการเรียนรู้ภาษาถิ่น</h3>
-          <p id="ftSubjectDisplay">CEE3501 ...</p>
+        <!-- ฝั่งซ้าย: โลโก้ และ ข้อมูลรายวิชา -->
+        <div class="footer-left">
+          <img id="ftLogoImg" src="" alt="Logo">
+          <div class="footer-text">
+            <h3 id="ftTitleDisplay">ระบบสื่อการเรียนรู้ภาษาถิ่น</h3>
+            <p id="ftSubjectDisplay">CEE3501 ...</p>
+          </div>
+        </div>
+        
+        <!-- ฝั่งขวา: จัดทำโดย และ QR Code วางในกรอบแคปซูล -->
+        <div class="footer-right">
           <div class="footer-prepared">
             <span>จัดทำโดย</span>
             <img id="ftBarcodeImg" src="" alt="QR Code">
@@ -225,9 +237,8 @@
       <!-- Main Content -->
       <div class="admin-main">
         
-        <!-- Tab 1: ดีไซน์ (แยกปุ่มบันทึกชัดเจน) -->
+        <!-- Tab 1: ดีไซน์ -->
         <div id="tab-design" class="admin-panel active">
-          
           <div class="section-divider" style="margin-top:0;">1. สีและฟอนต์เว็บไซต์</div>
           <div class="grid-2">
             <div class="form-group"><label>สีหลักเว็บไซต์:</label><input type="color" id="themePrimaryInput" class="form-control" style="height:40px; padding:2px;"></div>
@@ -267,7 +278,6 @@
 
         <!-- Tab 2: ชื่อเว็บ เมนู และ Footer -->
         <div id="tab-menus" class="admin-panel">
-          
           <div class="section-divider" style="margin-top:0;">1. ชื่อเว็บไซต์ (แถบด้านบน)</div>
           <div class="grid-2">
             <div class="form-group"><label>ชื่อเว็บไซต์หลัก:</label><input type="text" id="siteTitleInput" class="form-control"></div>
@@ -281,7 +291,6 @@
             <input type="text" id="newMenuInput" class="form-control" placeholder="พิมพ์ชื่อเมนูใหม่..." style="margin-bottom:0;">
             <button class="btn-green" style="white-space:nowrap;" onclick="addNewMenu()">+ เพิ่มเมนู</button>
           </div>
-          <!-- เมนูจะบันทึกอัตโนมัติเมื่อกด ไม่ต้องมีปุ่มเซฟรวม -->
 
           <div class="section-divider">3. ข้อมูลท้ายเว็บไซต์ (Footer Minimal)</div>
           <div class="form-group"><label>URL โลโก้ (วงกลมซ้ายสุด):</label><input type="url" id="ftLogoInput" class="form-control" placeholder="https://..."></div>
@@ -289,12 +298,11 @@
             <div class="form-group"><label>ชื่อระบบ:</label><input type="text" id="ftTitleInput" class="form-control" placeholder="ระบบสื่อการเรียนรู้ภาษาถิ่น"></div>
             <div class="form-group"><label>รหัสวิชา / ข้อมูลเพิ่มเติม:</label><input type="text" id="ftSubjectInput" class="form-control" placeholder="CEE3501..."></div>
           </div>
-          <div class="form-group"><label>URL บาร์โค้ด / QR Code (แสดงข้างคำว่าจัดทำโดย):</label><input type="url" id="ftBarcodeInput" class="form-control" placeholder="https://..."></div>
+          <div class="form-group"><label>URL บาร์โค้ด / QR Code (แสดงในกรอบแคปซูลข้างจัดทำโดย):</label><input type="url" id="ftBarcodeInput" class="form-control" placeholder="https://..."></div>
           <button class="btn-blue" onclick="saveFooter()">💾 บันทึกข้อมูลท้ายเว็บ</button>
-
         </div>
 
-        <!-- Tab 3: เพิ่มสื่อ (ปรับระบบฝัง Embed) -->
+        <!-- Tab 3: เพิ่มสื่อ -->
         <div id="tab-add" class="admin-panel">
           <h2 class="panel-title">📚 เพิ่มสื่อการเรียนรู้</h2>
           <div class="form-group"><label>เลือกหมวดหมู่:</label><select id="categorySelect" class="form-control" onchange="toggleAdminFields()"></select></div>
@@ -336,7 +344,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <script>
-    // ตั้งค่า Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyD34HFIpO9LQc0GuFfiC1FuBd7fROOvIco",
       authDomain: "cee3501-9eba6.firebaseapp.com",
@@ -352,7 +359,6 @@
     let isAdminLoggedIn = false;
     let currentCategoryView = 'all';
     
-    // ข้อมูลเริ่มต้น
     let siteData = {
       title: "ระบบสื่อการเรียนรู้ภาษาถิ่น", subtitle: "CEE3501 นวัตกรรมและเทคโนโลยีการจัดการเรียนรู้",
       themePrimary: "#4f46e5", themeSecondary: "#3b82f6", splashC1: "#4f46e5", splashC2: "#3b82f6", themeFont: "'Prompt', sans-serif",
@@ -362,23 +368,19 @@
       menus: [{ id: "indicator", name: "🎯 มาตรฐานและตัวชี้วัด" }, { id: "content", name: "📖 เนื้อหาบทเรียน" }, { id: "game", name: "🎮 เกมการศึกษา" }]
     };
 
-    // ป๊อปอัป
     function showModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     function customAlert(title, desc, icon = "✨") { document.getElementById('alertTitle').innerText = title; document.getElementById('alertDesc').innerText = desc; document.getElementById('alertIcon').innerText = icon; showModal('modal-alert'); }
     function togglePassword() { const pwd = document.getElementById('adminPwdInput'); const eye = document.getElementById('eyeIcon'); if(pwd.type === 'password') { pwd.type = 'text'; eye.innerHTML = '<span style="opacity: 0.4;">👁️</span>'; } else { pwd.type = 'password'; eye.innerHTML = '👁️'; } }
 
-    // แก้ Error ฟังก์ชันหาย (ดึงชื่อเมนู)
     function getCategoryName(id) { const menu = siteData.menus.find(m => m.id === id); return menu ? menu.name : 'ไม่ระบุหมวดหมู่'; }
 
-    // โหลดครั้งแรก
     db.collection("settings").doc("siteConfig").get().then((doc) => {
       if (doc.exists) siteData = { ...siteData, ...doc.data() };
       document.getElementById('student-view').style.display = 'flex';
       applySettings();
     });
 
-    // นำค่ามาใช้งานและกรอกใส่ฟอร์ม
     function applySettings() {
       document.documentElement.style.setProperty('--primary', siteData.themePrimary || '#4f46e5');
       document.documentElement.style.setProperty('--secondary', siteData.themeSecondary || '#3b82f6');
@@ -399,7 +401,7 @@
       
       document.getElementById('displayTitle').innerText = siteData.title || ''; document.getElementById('displaySubtitle').innerText = siteData.subtitle || '';
       
-      // อัปเดต Footer
+      // Footer Minimal แบบแยกซ้ายขวา
       const logoEl = document.getElementById('ftLogoImg');
       if(siteData.ftLogo) { logoEl.src = siteData.ftLogo; logoEl.style.display = 'block'; } else { logoEl.style.display = 'none'; }
       document.getElementById('ftTitleDisplay').innerText = siteData.ftTitle || '';
@@ -407,7 +409,6 @@
       const bcImg = document.getElementById('ftBarcodeImg');
       if(siteData.ftBarcode) { bcImg.src = siteData.ftBarcode; bcImg.style.display = 'block'; } else { bcImg.style.display = 'none'; }
 
-      // อัปเดตเมนูหน้าเว็บ และ Admin List (ไอคอนมินิมอล)
       let menuHtml = `<button class="nav-btn ${currentCategoryView==='all' ? 'active':''}" onclick="loadAllMediaFeed()">🏠 หน้าแรก (ฟีดรวม)</button>`; 
       let selectHtml = ''; let adminMenuHtml = '';
       siteData.menus.forEach((menu, index) => {
@@ -427,25 +428,14 @@
       document.getElementById('categorySelect').innerHTML = selectHtml;
       document.getElementById('adminMenuList').innerHTML = adminMenuHtml;
 
-      // ใส่ค่ากลับเข้าฟอร์มแอดมิน (แยก ID ชัดเจน ไม่มั่วแล้ว)
-      document.getElementById('themePrimaryInput').value = siteData.themePrimary || '#4f46e5';
-      document.getElementById('themeSecondaryInput').value = siteData.themeSecondary || '#3b82f6';
-      document.getElementById('splashC1Input').value = siteData.splashC1 || '#4f46e5';
-      document.getElementById('splashC2Input').value = siteData.splashC2 || '#3b82f6';
-      document.getElementById('themeFontSelect').value = siteData.themeFont || "'Prompt', sans-serif";
-      document.getElementById('splashImgInput').value = siteData.splashImg || '';
-      document.getElementById('splashTitleInput').value = siteData.splashTitle || '';
-      document.getElementById('splashSubtitleInput').value = siteData.splashSubtitle || '';
-      document.getElementById('btnTextInput').value = siteData.btnText || 'เข้าสู่เว็บไซต์';
-      document.getElementById('btnIconInput').value = siteData.btnIcon || '🚀';
-      document.getElementById('btnBorderColor').value = siteData.btnBorder || '#ffffff';
-      document.getElementById('btnTextColor').value = siteData.btnTextColor || '#4f46e5';
-      document.getElementById('siteTitleInput').value = siteData.title || '';
-      document.getElementById('siteSubtitleInput').value = siteData.subtitle || '';
-      document.getElementById('ftLogoInput').value = siteData.ftLogo || '';
-      document.getElementById('ftTitleInput').value = siteData.ftTitle || '';
-      document.getElementById('ftSubjectInput').value = siteData.ftSubject || '';
-      document.getElementById('ftBarcodeInput').value = siteData.ftBarcode || '';
+      // ใส่ค่ากลับเข้าฟอร์ม
+      const fields = ['themePrimary', 'themeSecondary', 'splashC1', 'splashC2', 'themeFont', 'splashImg', 'splashTitle', 'splashSubtitle', 'btnText', 'btnIcon', 'btnBorderColor', 'btnTextColor', 'siteTitle', 'siteSubtitle', 'ftLogo', 'ftTitle', 'ftSubject', 'ftBarcode'];
+      fields.forEach(key => {
+        const inputId = key.replace('Color', '') + (key.includes('Select') ? '' : 'Input');
+        const el = document.getElementById(inputId) || document.getElementById(key + 'Select');
+        if(el) el.value = siteData[key] || '';
+      });
+      document.getElementById('btnBorderColor').value = siteData.btnBorder || '#ffffff'; document.getElementById('btnTextColor').value = siteData.btnTextColor || '#4f46e5';
       
       toggleAdminFields();
     }
@@ -463,7 +453,7 @@
       setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; loadAllMediaFeed(); }, 800);
     }
 
-    // ================= ระบบบันทึกข้อมูลแบบแยกส่วน (Merge) =================
+    // ระบบบันทึกแยกส่วน (แก้ปัญหาเซฟแล้วข้อมูลอื่นหาย)
     function updateSettingsDb(newData, successMsg) {
       db.collection("settings").doc("siteConfig").set(newData, { merge: true }).then(() => {
         siteData = { ...siteData, ...newData }; applySettings();
@@ -471,50 +461,19 @@
       }).catch(err => customAlert("ผิดพลาด", err.message, "❌"));
     }
 
-    function saveDesign() {
-      updateSettingsDb({
-        themePrimary: document.getElementById('themePrimaryInput').value, themeSecondary: document.getElementById('themeSecondaryInput').value,
-        themeFont: document.getElementById('themeFontSelect').value
-      }, "อัปเดตสีและฟอนต์หลักของเว็บไซต์แล้ว");
-    }
+    function saveDesign() { updateSettingsDb({ themePrimary: document.getElementById('themePrimaryInput').value, themeSecondary: document.getElementById('themeSecondaryInput').value, themeFont: document.getElementById('themeFontSelect').value }, "อัปเดตสีและฟอนต์หลักของเว็บไซต์แล้ว"); }
+    function saveSplash() { updateSettingsDb({ splashC1: document.getElementById('splashC1Input').value, splashC2: document.getElementById('splashC2Input').value, splashImg: document.getElementById('splashImgInput').value, splashTitle: document.getElementById('splashTitleInput').value, splashSubtitle: document.getElementById('splashSubtitleInput').value }, "อัปเดตหน้าปกต้อนรับแล้ว"); }
+    function saveBtnStyle() { updateSettingsDb({ btnText: document.getElementById('btnTextInput').value, btnIcon: document.getElementById('btnIconInput').value, btnBorder: document.getElementById('btnBorderColor').value, btnTextColor: document.getElementById('btnTextColor').value }, "อัปเดตปุ่มเข้าสู่เว็บไซต์แล้ว"); }
+    function saveHeader() { updateSettingsDb({ title: document.getElementById('siteTitleInput').value, subtitle: document.getElementById('siteSubtitleInput').value }, "อัปเดตชื่อเว็บไซต์แล้ว"); }
+    function saveFooter() { updateSettingsDb({ ftLogo: document.getElementById('ftLogoInput').value, ftTitle: document.getElementById('ftTitleInput').value, ftSubject: document.getElementById('ftSubjectInput').value, ftBarcode: document.getElementById('ftBarcodeInput').value }, "อัปเดตข้อมูลท้ายเว็บไซต์แล้ว"); }
 
-    function saveSplash() {
-      updateSettingsDb({
-        splashC1: document.getElementById('splashC1Input').value, splashC2: document.getElementById('splashC2Input').value,
-        splashImg: document.getElementById('splashImgInput').value, splashTitle: document.getElementById('splashTitleInput').value,
-        splashSubtitle: document.getElementById('splashSubtitleInput').value
-      }, "อัปเดตหน้าปกต้อนรับแล้ว");
-    }
-
-    function saveBtnStyle() {
-      updateSettingsDb({
-        btnText: document.getElementById('btnTextInput').value, btnIcon: document.getElementById('btnIconInput').value,
-        btnBorder: document.getElementById('btnBorderColor').value, btnTextColor: document.getElementById('btnTextColor').value
-      }, "อัปเดตปุ่มเข้าสู่เว็บไซต์แล้ว");
-    }
-
-    function saveHeader() {
-      updateSettingsDb({ title: document.getElementById('siteTitleInput').value, subtitle: document.getElementById('siteSubtitleInput').value }, "อัปเดตชื่อเว็บไซต์แล้ว");
-    }
-
-    function saveFooter() {
-      updateSettingsDb({
-        ftLogo: document.getElementById('ftLogoInput').value, ftTitle: document.getElementById('ftTitleInput').value,
-        ftSubject: document.getElementById('ftSubjectInput').value, ftBarcode: document.getElementById('ftBarcodeInput').value
-      }, "อัปเดตข้อมูลท้ายเว็บไซต์แล้ว");
-    }
-
-    // ================= จัดการเมนู (ทำงานทันทีที่กด) =================
     function addNewMenu() {
       const name = document.getElementById('newMenuInput').value; if(!name) return;
       let newMenus = [...siteData.menus, { id: "menu_" + Date.now(), name: name }];
-      db.collection("settings").doc("siteConfig").set({ menus: newMenus }, { merge: true }).then(() => {
-        siteData.menus = newMenus; applySettings(); document.getElementById('newMenuInput').value = '';
-      });
+      db.collection("settings").doc("siteConfig").set({ menus: newMenus }, { merge: true }).then(() => { siteData.menus = newMenus; applySettings(); document.getElementById('newMenuInput').value = ''; });
     }
     function moveMenu(index, dir) {
-      let newMenus = [...siteData.menus];
-      const temp = newMenus[index]; newMenus[index] = newMenus[index + dir]; newMenus[index + dir] = temp;
+      let newMenus = [...siteData.menus]; const temp = newMenus[index]; newMenus[index] = newMenus[index + dir]; newMenus[index + dir] = temp;
       db.collection("settings").doc("siteConfig").set({ menus: newMenus }, { merge: true }).then(() => { siteData.menus = newMenus; applySettings(); });
     }
     function deleteMenu(index) {
@@ -524,7 +483,6 @@
       }; showModal('modal-confirm');
     }
 
-    // ================= Admin Layout =================
     function switchAdminTab(tabId, btn) {
       document.querySelectorAll('.admin-panel').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.sidebar-btn').forEach(el => el.classList.remove('active'));
@@ -540,11 +498,8 @@
         document.getElementById('adminPwdInput').value = '';
       } else { customAlert("ผิดพลาด", "รหัสผ่านไม่ถูกต้อง!", "❌"); }
     }
-    function logoutAdmin() {
-      isAdminLoggedIn = false; document.getElementById('admin-dashboard').style.display = 'none'; document.getElementById('student-view').style.display = 'flex'; loadAllMediaFeed(); 
-    }
+    function logoutAdmin() { isAdminLoggedIn = false; document.getElementById('admin-dashboard').style.display = 'none'; document.getElementById('student-view').style.display = 'flex'; loadAllMediaFeed(); }
 
-    // ================= โหลดสื่อแสดงผล =================
     function buildCardHtml(data) {
       let imgHTML = data.imgUrl ? `<img src="${data.imgUrl}" class="card-image" style="width:100%; max-height:300px; object-fit:cover; border-radius:12px; margin-bottom:15px;">` : '';
       let stdHtml = data.standard ? `<div class="info-box"><h4>🎯 มาตรฐาน:</h4><p>${data.standard.replace(/\n/g, '<br>')}</p></div>` : '';
@@ -553,7 +508,6 @@
       let audioHtml = data.audioUrl ? `<audio controls src="${data.audioUrl}"></audio>` : '';
       
       let embedsHtml = '';
-      // รองรับทั้งข้อมูลเก่าและใหม่ (embedCode เดิม และ embedCodes แบบ Array)
       let allEmbeds = [];
       if(data.embedCode) allEmbeds.push(data.embedCode);
       if(data.embedCodes) allEmbeds = allEmbeds.concat(data.embedCodes);
@@ -599,7 +553,6 @@
       });
     }
 
-    // ================= จัดการสื่อใน Admin (แก้ไขระบบ Embed ให้เสถียร) =================
     function addEmbedField() {
       const container = document.getElementById('embedInputsContainer');
       const ta = document.createElement('textarea');
@@ -617,9 +570,7 @@
       document.querySelectorAll('.embed-input').forEach(inp => {
         let val = inp.value.trim();
         if(val) {
-          // ถ้าเป็นโค้ด iframe อยู่แล้ว ให้ดึงมาใส่เลย (รองรับ Canva/Wordwall)
           if(val.toLowerCase().includes("<iframe")) { embedCodes.push(val); } 
-          // ถ้าเป็นลิงก์ Youtube ปกติ แปลงเป็น iframe ให้
           else if(val.includes("youtube.com/watch?v=")) { embedCodes.push(`<iframe src="https://www.youtube.com/embed/${val.split("v=")[1].substring(0, 11)}" allowfullscreen></iframe>`); } 
           else if (val.includes("youtu.be/")) { embedCodes.push(`<iframe src="https://www.youtube.com/embed/${val.split("youtu.be/")[1].substring(0, 11)}" allowfullscreen></iframe>`); } 
           else { embedCodes.push(val); }
