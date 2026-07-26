@@ -61,16 +61,16 @@
     .nav-btn:hover, .nav-btn.active { background: var(--primary); color: white; transform: translateY(-3px); }
 
     .container { flex: 1; max-width: 1000px; margin: 40px auto; padding: 0 20px; width: 100%; box-sizing: border-box; }
-    /* ================= อัปเกรดปุ่มหัวข้อหมวดหมู่ในหน้าแรก ================= */
+    /* ================= แถบหมวดหมู่หน้าแรก (กดเพื่อวาร์ป) ================= */
     .feed-category-header { 
       background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-      color: white; padding: 12px 25px; border-radius: 12px; margin: 40px 0 20px 0; 
+      color: white; padding: 12px 30px; border-radius: 50px; margin: 40px auto 20px auto; 
       font-size: 20px; font-weight: 600; box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-      display: flex; justify-content: space-between; align-items: center; 
+      display: inline-block; text-align: center; 
       cursor: pointer; transition: all 0.3s ease; 
     }
     .feed-category-header:hover { 
-      transform: translateY(-3px) scale(1.02); 
+      transform: translateY(-3px) scale(1.05); 
       box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
     }
     .view-all-badge { 
@@ -556,10 +556,7 @@
         siteData.menus.forEach(menu => {
           const catMedia = allMedia.filter(m => m.category === menu.id);
           if(catMedia.length > 0) {
-            html += `<div class='feed-category-header' onclick="loadMedia('${menu.id}')" title="คลิกเพื่อดูหมวดหมู่นี้ทั้งหมด">
-           <span>${menu.name}</span>
-           <span class="view-all-badge">ดูทั้งหมด ➔</span>
-         </div>`;
+            html += `<div class='feed-category-header' onclick="loadMedia('${menu.id}')" title="คลิกเพื่อสลับไปหน้าหมวดหมู่นี้">${menu.name}</div>`;
             catMedia.forEach(data => { html += buildCardHtml(data); });
           }
         });
