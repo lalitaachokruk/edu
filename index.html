@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบสื่อการเรียนรู้</title>
+  <title>ระบบสื่อการเรียนการสอนภาษาถิ่น</title>
   
   <!-- โลโก้แถบเบราว์เซอร์ และ ไอคอนแอปพลิเคชันบน Apple -->
   <link rel="icon" type="image/png" href="https://i.postimg.cc/RhyMD2xC/Chat-GPT-Image-26-k-kh-2569-16-09-09.png">
@@ -22,6 +22,9 @@
       --banner-bg: #eef2ff; --banner-text: #4338ca;
       --font-main: 'Prompt', sans-serif;
       --btn-border: #ffffff; --btn-text: #4f46e5;
+      /* เพิ่มตัวแปรสีสำหรับชื่อเว็บและชื่อเรื่อง */
+      --header-text: #ffffff; 
+      --card-title-color: #1e293b;
     }
     
     body { font-family: var(--font-main); background: var(--bg); margin: 0; padding: 0; color: var(--text); overflow-x: hidden; transition: background 0.3s; }
@@ -54,10 +57,10 @@
 
     /* ================= ส่วนเว็บนักเรียน ================= */
     #student-view { display: none; min-height: 100vh; display: flex; flex-direction: column; }
-    .header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 40px 20px; text-align: center; position: relative; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+    .header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: var(--header-text); padding: 40px 20px; text-align: center; position: relative; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
     .header h1 { margin: 0; font-size: 34px; font-weight: 600; }
     .header p { margin: 10px 0 0 0; font-size: 18px; opacity: 0.9; }
-    .admin-icon { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); border: none; color: white; font-size: 20px; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(5px); }
+    .admin-icon { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); border: none; color: var(--header-text); font-size: 20px; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(5px); }
     
     .nav-menu { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: -20px; position: relative; z-index: 10; padding: 0 20px; }
     .nav-btn { background: white; border: none; padding: 10px 20px; border-radius: 50px; font-size: 15px; font-weight: 500; color: var(--primary); cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
@@ -68,7 +71,7 @@
     .feed-category-header:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
     
     .card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; }
-    .card-title { font-size: 22px; color: var(--primary); margin: 0 0 15px 0; }
+    .card-title { font-size: 22px; color: var(--card-title-color); margin: 0 0 15px 0; }
     .info-box { background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); }
     .info-box h4 { margin: 0 0 5px 0; color: var(--primary); font-size: 16px; }
     .info-box p { margin: 0; color: #475569; font-size: 15px; line-height: 1.5; }
@@ -251,6 +254,11 @@
           <div class="grid-2">
             <div class="form-group"><label>สีหลักเว็บไซต์:</label><input type="color" id="themePrimaryInput" class="form-control" style="height:40px; padding:2px;"></div>
             <div class="form-group"><label>สีรองเว็บไซต์:</label><input type="color" id="themeSecondaryInput" class="form-control" style="height:40px; padding:2px;"></div>
+            
+            <!-- เพิ่มฟังก์ชันปรับสีตัวหนังสือแถบชื่อเว็บและชื่อเรื่อง -->
+            <div class="form-group"><label>สีตัวหนังสือแถบชื่อเว็บ (ด้านบนสุด):</label><input type="color" id="headerTextColorInput" class="form-control" style="height:40px; padding:2px;"></div>
+            <div class="form-group"><label>สีชื่อเรื่อง (ในการ์ดเนื้อหา):</label><input type="color" id="cardTitleColorInput" class="form-control" style="height:40px; padding:2px;"></div>
+
             <div class="form-group" style="grid-column: span 2;"><label>ฟอนต์ (เปลี่ยนทั้งเว็บ):</label>
               <select id="themeFontSelect" class="form-control">
                 <option value="'Prompt', sans-serif">Prompt (ทันสมัย แนะนำ)</option>
@@ -274,7 +282,6 @@
           </div>
           <button class="btn-blue" onclick="saveSplash()">💾 บันทึกหน้าต้อนรับ</button>
 
-          <!-- 🌟 ส่วนที่เพิ่มเข้ามาใหม่: แถบป้ายต้อนรับหน้าแรก -->
           <div class="section-divider">3. แถบป้ายต้อนรับ (หน้าแรกของเว็บ)</div>
           <div class="grid-2">
             <div class="form-group"><label>สีพื้นหลังป้ายต้อนรับ:</label><input type="color" id="bannerBgInput" class="form-control" style="height:40px; padding:2px;"></div>
@@ -375,10 +382,11 @@
     let isAdminLoggedIn = false;
     let currentCategoryView = 'all';
     
-    // ตั้งค่าเริ่มต้น: แบนเนอร์หน้าแรกเป็นสีฟ้าพาสเทล ตัดกับหนังสือสีเข้ม
+    // ตั้งค่าเริ่มต้นของระบบ
     let siteData = {
       title: "ระบบสื่อการเรียนรู้ภาษาถิ่น", subtitle: "CEE3501 นวัตกรรมและเทคโนโลยีการจัดการเรียนรู้",
       themePrimary: "#4f46e5", themeSecondary: "#3b82f6", splashC1: "#4f46e5", splashC2: "#3b82f6", themeFont: "'Prompt', sans-serif",
+      headerTextColor: "#ffffff", cardTitleColor: "#1e293b", /* ค่าเริ่มต้นของสีตัวหนังสือ */
       bannerBg: "#eef2ff", bannerText: "#4338ca", 
       splashImg: "", splashTitle: "ยินดีต้อนรับนักเรียน", splashSubtitle: "เรื่อง ภาษาถิ่น",
       btnText: "เข้าสู่เว็บไซต์", btnIcon: "🚀", btnBorder: "#ffffff", btnTextColor: "#4f46e5",
@@ -400,6 +408,7 @@
     });
 
     function applySettings() {
+      // นำค่าสีไปประยุกต์ใช้กับหน้าเว็บ
       document.documentElement.style.setProperty('--primary', siteData.themePrimary || '#4f46e5');
       document.documentElement.style.setProperty('--secondary', siteData.themeSecondary || '#3b82f6');
       document.documentElement.style.setProperty('--splash-c1', siteData.splashC1 || siteData.themePrimary || '#4f46e5');
@@ -407,6 +416,10 @@
       document.documentElement.style.setProperty('--font-main', siteData.themeFont || "'Prompt', sans-serif");
       document.documentElement.style.setProperty('--btn-border', siteData.btnBorder || '#ffffff');
       document.documentElement.style.setProperty('--btn-text', siteData.btnTextColor || '#4f46e5');
+      
+      // ตัวแปรสีชื่อเว็บและชื่อเรื่อง
+      document.documentElement.style.setProperty('--header-text', siteData.headerTextColor || '#ffffff');
+      document.documentElement.style.setProperty('--card-title-color', siteData.cardTitleColor || '#1e293b');
       
       // ตัวแปรสีแบนเนอร์
       document.documentElement.style.setProperty('--banner-bg', siteData.bannerBg || '#eef2ff');
@@ -450,9 +463,13 @@
       document.getElementById('categorySelect').innerHTML = selectHtml;
       document.getElementById('adminMenuList').innerHTML = adminMenuHtml;
 
-      // อัปเดตฟอร์มแอดมิน (เขียนแยกป้องกันการดึงข้อมูลทับกัน)
+      // อัปเดตฟอร์มแอดมิน (เพิ่มสีชื่อเว็บและสีชื่อเรื่อง)
       document.getElementById('themePrimaryInput').value = siteData.themePrimary || '#4f46e5';
       document.getElementById('themeSecondaryInput').value = siteData.themeSecondary || '#3b82f6';
+      
+      document.getElementById('headerTextColorInput').value = siteData.headerTextColor || '#ffffff';
+      document.getElementById('cardTitleColorInput').value = siteData.cardTitleColor || '#1e293b';
+
       document.getElementById('splashC1Input').value = siteData.splashC1 || '#4f46e5';
       document.getElementById('splashC2Input').value = siteData.splashC2 || '#3b82f6';
       document.getElementById('themeFontSelect').value = siteData.themeFont || "'Prompt', sans-serif";
@@ -462,7 +479,6 @@
       document.getElementById('splashTitleInput').value = siteData.splashTitle || '';
       document.getElementById('splashSubtitleInput').value = siteData.splashSubtitle || '';
       
-      // ดึงค่าปุ่มเข้าเว็บแบบเจาะจง
       document.getElementById('btnTextInput').value = siteData.btnText || 'เข้าสู่เว็บไซต์';
       document.getElementById('btnIconInput').value = siteData.btnIcon || '🚀';
       document.getElementById('btnBorderColor').value = siteData.btnBorder || '#ffffff';
@@ -498,12 +514,19 @@
       }).catch(err => customAlert("ผิดพลาด", err.message, "❌"));
     }
 
-    function saveDesign() { updateSettingsDb({ themePrimary: document.getElementById('themePrimaryInput').value, themeSecondary: document.getElementById('themeSecondaryInput').value, themeFont: document.getElementById('themeFontSelect').value }, "อัปเดตสีและฟอนต์หลักของเว็บไซต์แล้ว"); }
+    // ฟังก์ชันบันทึกที่อัปเดตเพื่อรองรับสีตัวหนังสือใหม่
+    function saveDesign() { 
+      updateSettingsDb({ 
+        themePrimary: document.getElementById('themePrimaryInput').value, 
+        themeSecondary: document.getElementById('themeSecondaryInput').value, 
+        themeFont: document.getElementById('themeFontSelect').value,
+        headerTextColor: document.getElementById('headerTextColorInput').value,
+        cardTitleColor: document.getElementById('cardTitleColorInput').value
+      }, "อัปเดตสีและฟอนต์หลักของเว็บไซต์แล้ว"); 
+    }
+    
     function saveSplash() { updateSettingsDb({ splashC1: document.getElementById('splashC1Input').value, splashC2: document.getElementById('splashC2Input').value, splashImg: document.getElementById('splashImgInput').value, splashTitle: document.getElementById('splashTitleInput').value, splashSubtitle: document.getElementById('splashSubtitleInput').value }, "อัปเดตหน้าปกต้อนรับแล้ว"); }
-    
-    // บันทึกสีป้ายต้อนรับ
     function saveBannerDesign() { updateSettingsDb({ bannerBg: document.getElementById('bannerBgInput').value, bannerText: document.getElementById('bannerTextInput').value }, "อัปเดตสีป้ายต้อนรับหน้าแรกแล้ว"); }
-    
     function saveBtnStyle() { updateSettingsDb({ btnText: document.getElementById('btnTextInput').value, btnIcon: document.getElementById('btnIconInput').value, btnBorder: document.getElementById('btnBorderColor').value, btnTextColor: document.getElementById('btnTextColor').value }, "อัปเดตปุ่มเข้าสู่เว็บไซต์แล้ว"); }
     function saveHeader() { updateSettingsDb({ title: document.getElementById('siteTitleInput').value, subtitle: document.getElementById('siteSubtitleInput').value }, "อัปเดตชื่อเว็บไซต์แล้ว"); }
     function saveFooter() { updateSettingsDb({ ftLogo: document.getElementById('ftLogoInput').value, ftTitle: document.getElementById('ftTitleInput').value, ftSubject: document.getElementById('ftSubjectInput').value, ftBarcode: document.getElementById('ftBarcodeInput').value }, "อัปเดตข้อมูลท้ายเว็บไซต์แล้ว"); }
@@ -571,7 +594,6 @@
       const allMedia = []; snapshot.forEach(doc => { let d = doc.data(); d.id = doc.id; allMedia.push(d); });
       let html = "";
       
-      // ✨ แบนเนอร์ต้อนรับแบบใช้สีจากระบบ Admin ✨
       html += `
         <div style="background: var(--banner-bg); border-radius: 20px; padding: 40px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); color: var(--banner-text); animation: fadeIn 0.6s; border: 1px solid rgba(0,0,0,0.05);">
           <div style="flex: 1;">
