@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบสื่อการเรียนการสอนภาษาถิ่น</title>
+  <title>ระบบสื่อการเรียนรู้ภาษาถิ่น</title>
   
   <!-- โลโก้แถบเบราว์เซอร์ และ ไอคอนแอปพลิเคชันบน Apple -->
   <link rel="icon" type="image/png" href="https://i.postimg.cc/RhyMD2xC/Chat-GPT-Image-26-k-kh-2569-16-09-09.png">
@@ -56,11 +56,12 @@
     .btn-cancel { background: #f1f5f9; color: #475569; }
 
     /* ================= ส่วนเว็บนักเรียน ================= */
-    #student-view { display: none; min-height: 100vh; display: flex; flex-direction: column; }
+    #student-view { display: none; min-height: 100vh; display: flex; flex-direction: column; position: relative; }
     .header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: var(--header-text); padding: 40px 20px; text-align: center; position: relative; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
     .header h1 { margin: 0; font-size: 34px; font-weight: 600; }
     .header p { margin: 10px 0 0 0; font-size: 18px; opacity: 0.9; }
-    .admin-icon { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); border: none; color: var(--header-text); font-size: 20px; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(5px); }
+    .admin-icon { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); border: none; color: var(--header-text); font-size: 20px; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(5px); transition: 0.3s; }
+    .admin-icon:hover { transform: rotate(90deg); }
     
     .nav-menu { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: -20px; position: relative; z-index: 10; padding: 0 20px; }
     .nav-btn { background: white; border: none; padding: 10px 20px; border-radius: 50px; font-size: 15px; font-weight: 500; color: var(--primary); cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
@@ -70,7 +71,8 @@
     .feed-category-header { background: var(--primary); color: white; padding: 8px 20px; border-radius: 10px; margin: 40px 0 20px 0; font-size: 18px; display: inline-block; cursor: pointer; transition: 0.3s; }
     .feed-category-header:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
     
-    .card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; }
+    .card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; transition: 0.3s; }
+    .card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.08); transform: translateY(-2px); }
     .card-title { font-size: 22px; color: var(--card-title-color); margin: 0 0 15px 0; }
     .info-box { background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); }
     .info-box h4 { margin: 0 0 5px 0; color: var(--primary); font-size: 16px; }
@@ -79,6 +81,25 @@
     .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 15px; }
     .media-grid iframe, .media-container iframe { width: 100%; height: 450px; border: none; border-radius: 12px; background: #f1f5f9; margin-top: 10px; }
     audio { width: 100%; margin-top: 15px; outline: none; }
+
+    /* ================= แอนิเมชันลูกเล่นสมัยใหม่ ================= */
+    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+    .floating-emoji { animation: float 3s ease-in-out infinite; display: inline-block; }
+
+    /* ================= 🤖 ผู้ช่วยอัจฉริยะ (Bot Mascot) มุมซ้ายล่าง ================= */
+    .helper-bot { position: fixed; bottom: 30px; left: 30px; z-index: 9990; cursor: pointer; font-family: var(--font-main); }
+    .bot-avatar { font-size: 45px; background: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 3px solid var(--primary); animation: bobble 3s infinite ease-in-out; transition: 0.3s; }
+    .bot-avatar:hover { transform: scale(1.1); box-shadow: 0 15px 35px rgba(0,0,0,0.25); }
+    @keyframes bobble { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(5deg); } }
+    
+    .bot-message { position: absolute; bottom: 85px; left: 0; background: white; padding: 20px; border-radius: 20px; border-bottom-left-radius: 0; box-shadow: 0 15px 40px rgba(0,0,0,0.15); width: 260px; border: 2px solid var(--primary); display: none; transform-origin: bottom left; animation: popIn 0.3s; cursor: default; }
+    .bot-message h4 { margin: 0 0 10px 0; color: var(--primary); font-size: 16px; display: flex; align-items: center; gap: 8px; }
+    .bot-message p { margin: 0 0 15px 0; font-size: 14px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 10px; border-radius: 10px; }
+    .bot-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; padding: 10px; border-radius: 50px; font-size: 14px; cursor: pointer; width: 100%; transition: 0.2s; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .bot-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .close-bot { position: absolute; top: 12px; right: 15px; cursor: pointer; color: #94a3b8; font-size: 18px; line-height: 1; }
+    .close-bot:hover { color: #ef4444; }
+    @media (max-width: 768px) { .helper-bot { bottom: 20px; left: 20px; } .bot-avatar { width: 60px; height: 60px; font-size: 35px; } .bot-message { width: 230px; bottom: 75px; } }
 
     /* ================= ท้ายเว็บไซต์ (Footer Minimal) ================= */
     footer { background: white; margin-top: 40px; border-top: 1px solid #e2e8f0; padding: 30px 20px; }
@@ -207,6 +228,17 @@
       <div id="display-section"></div>
     </div>
     
+    <!-- 🤖 ผู้ช่วยอัจฉริยะ (Mascot Bot) ลอยอยู่มุมซ้ายล่าง -->
+    <div id="helper-bot" class="helper-bot" onclick="toggleBotMessage()">
+      <div class="bot-message" id="bot-message" onclick="event.stopPropagation()">
+        <div class="close-bot" onclick="toggleBotMessage(event)">✖</div>
+        <h4>🦉 พี่ฮูกชวนรู้!</h4>
+        <p id="bot-text">กดปุ่มด้านล่างสิ พี่ฮูกจะแนะนำสื่อสนุกๆ ให้เรียน!</p>
+        <button class="bot-btn" onclick="fetchRandomMedia(event)">สุ่มแนะนำเนื้อหาให้หน่อย 🔄</button>
+      </div>
+      <div class="bot-avatar">🦉</div>
+    </div>
+
     <!-- Footer ท้ายเว็บไซต์ -->
     <footer>
       <div class="footer-content">
@@ -255,7 +287,6 @@
             <div class="form-group"><label>สีหลักเว็บไซต์:</label><input type="color" id="themePrimaryInput" class="form-control" style="height:40px; padding:2px;"></div>
             <div class="form-group"><label>สีรองเว็บไซต์:</label><input type="color" id="themeSecondaryInput" class="form-control" style="height:40px; padding:2px;"></div>
             
-            <!-- เพิ่มฟังก์ชันปรับสีตัวหนังสือแถบชื่อเว็บและชื่อเรื่อง -->
             <div class="form-group"><label>สีตัวหนังสือแถบชื่อเว็บ (ด้านบนสุด):</label><input type="color" id="headerTextColorInput" class="form-control" style="height:40px; padding:2px;"></div>
             <div class="form-group"><label>สีชื่อเรื่อง (ในการ์ดเนื้อหา):</label><input type="color" id="cardTitleColorInput" class="form-control" style="height:40px; padding:2px;"></div>
 
@@ -382,11 +413,13 @@
     let isAdminLoggedIn = false;
     let currentCategoryView = 'all';
     
-    // ตั้งค่าเริ่มต้นของระบบ
+    // 🌟 ตัวแปรเก็บข้อมูลสื่อทั้งหมดไว้ให้พี่ฮูกสุ่ม
+    let globalMediaCache = []; 
+
     let siteData = {
       title: "ระบบสื่อการเรียนรู้ภาษาถิ่น", subtitle: "CEE3501 นวัตกรรมและเทคโนโลยีการจัดการเรียนรู้",
       themePrimary: "#4f46e5", themeSecondary: "#3b82f6", splashC1: "#4f46e5", splashC2: "#3b82f6", themeFont: "'Prompt', sans-serif",
-      headerTextColor: "#ffffff", cardTitleColor: "#1e293b", /* ค่าเริ่มต้นของสีตัวหนังสือ */
+      headerTextColor: "#ffffff", cardTitleColor: "#1e293b",
       bannerBg: "#eef2ff", bannerText: "#4338ca", 
       splashImg: "", splashTitle: "ยินดีต้อนรับนักเรียน", splashSubtitle: "เรื่อง ภาษาถิ่น",
       btnText: "เข้าสู่เว็บไซต์", btnIcon: "🚀", btnBorder: "#ffffff", btnTextColor: "#4f46e5",
@@ -401,6 +434,42 @@
 
     function getCategoryName(id) { const menu = siteData.menus.find(m => m.id === id); return menu ? menu.name : 'ไม่ระบุหมวดหมู่'; }
 
+    // ================= ระบบผู้ช่วยอัจฉริยะ (Bot Mascot) =================
+    function toggleBotMessage(event) {
+      if(event) event.stopPropagation();
+      const msgBox = document.getElementById('bot-message');
+      if(msgBox.style.display === 'block') {
+        msgBox.style.display = 'none';
+      } else {
+        msgBox.style.display = 'block';
+        fetchRandomMedia(); // สุ่มให้ทันทีที่เปิด
+      }
+    }
+
+    function fetchRandomMedia(event) {
+      if(event) event.stopPropagation();
+      const textEl = document.getElementById('bot-text');
+      
+      // ดึงข้อมูลทั้งหมดจากฐานข้อมูลมาเก็บไว้ใน Cache ก่อนสุ่ม
+      db.collection("medias").get().then((snap) => {
+        globalMediaCache = [];
+        snap.forEach(doc => globalMediaCache.push(doc.data()));
+        
+        if(globalMediaCache.length === 0) {
+          textEl.innerHTML = "ตอนนี้ยังไม่มีสื่อใหม่ๆ ในระบบเลยค่ะ 😅";
+          return;
+        }
+        
+        // สุ่มเนื้อหาจากฐานข้อมูล 1 เรื่อง
+        const randomItem = globalMediaCache[Math.floor(Math.random() * globalMediaCache.length)];
+        const catName = getCategoryName(randomItem.category);
+        
+        // แสดงข้อความ
+        textEl.innerHTML = `พี่ฮูกแนะนำให้ลองเรียนหมวด <b>${catName}</b> ดูสิ!<br><br><span style="color:var(--primary); font-weight:600;">👉 ${randomItem.title || 'สื่อการสอนน่าสนใจ'}</span>`;
+      });
+    }
+
+    // ================= โหลดข้อมูลตอนเข้าเว็บ =================
     db.collection("settings").doc("siteConfig").get().then((doc) => {
       if (doc.exists) siteData = { ...siteData, ...doc.data() };
       document.getElementById('student-view').style.display = 'flex';
@@ -408,7 +477,6 @@
     });
 
     function applySettings() {
-      // นำค่าสีไปประยุกต์ใช้กับหน้าเว็บ
       document.documentElement.style.setProperty('--primary', siteData.themePrimary || '#4f46e5');
       document.documentElement.style.setProperty('--secondary', siteData.themeSecondary || '#3b82f6');
       document.documentElement.style.setProperty('--splash-c1', siteData.splashC1 || siteData.themePrimary || '#4f46e5');
@@ -416,12 +484,8 @@
       document.documentElement.style.setProperty('--font-main', siteData.themeFont || "'Prompt', sans-serif");
       document.documentElement.style.setProperty('--btn-border', siteData.btnBorder || '#ffffff');
       document.documentElement.style.setProperty('--btn-text', siteData.btnTextColor || '#4f46e5');
-      
-      // ตัวแปรสีชื่อเว็บและชื่อเรื่อง
       document.documentElement.style.setProperty('--header-text', siteData.headerTextColor || '#ffffff');
       document.documentElement.style.setProperty('--card-title-color', siteData.cardTitleColor || '#1e293b');
-      
-      // ตัวแปรสีแบนเนอร์
       document.documentElement.style.setProperty('--banner-bg', siteData.bannerBg || '#eef2ff');
       document.documentElement.style.setProperty('--banner-text', siteData.bannerText || '#4338ca');
       
@@ -436,7 +500,6 @@
       
       document.getElementById('displayTitle').innerText = siteData.title || ''; document.getElementById('displaySubtitle').innerText = siteData.subtitle || '';
       
-      // Footer
       const logoEl = document.getElementById('ftLogoImg');
       if(siteData.ftLogo) { logoEl.src = siteData.ftLogo; logoEl.style.display = 'block'; } else { logoEl.style.display = 'none'; }
       document.getElementById('ftTitleDisplay').innerText = siteData.ftTitle || '';
@@ -463,13 +526,10 @@
       document.getElementById('categorySelect').innerHTML = selectHtml;
       document.getElementById('adminMenuList').innerHTML = adminMenuHtml;
 
-      // อัปเดตฟอร์มแอดมิน (เพิ่มสีชื่อเว็บและสีชื่อเรื่อง)
       document.getElementById('themePrimaryInput').value = siteData.themePrimary || '#4f46e5';
       document.getElementById('themeSecondaryInput').value = siteData.themeSecondary || '#3b82f6';
-      
       document.getElementById('headerTextColorInput').value = siteData.headerTextColor || '#ffffff';
       document.getElementById('cardTitleColorInput').value = siteData.cardTitleColor || '#1e293b';
-
       document.getElementById('splashC1Input').value = siteData.splashC1 || '#4f46e5';
       document.getElementById('splashC2Input').value = siteData.splashC2 || '#3b82f6';
       document.getElementById('themeFontSelect').value = siteData.themeFont || "'Prompt', sans-serif";
@@ -478,12 +538,10 @@
       document.getElementById('splashImgInput').value = siteData.splashImg || '';
       document.getElementById('splashTitleInput').value = siteData.splashTitle || '';
       document.getElementById('splashSubtitleInput').value = siteData.splashSubtitle || '';
-      
       document.getElementById('btnTextInput').value = siteData.btnText || 'เข้าสู่เว็บไซต์';
       document.getElementById('btnIconInput').value = siteData.btnIcon || '🚀';
       document.getElementById('btnBorderColor').value = siteData.btnBorder || '#ffffff';
       document.getElementById('btnTextColor').value = siteData.btnTextColor || '#4f46e5';
-      
       document.getElementById('siteTitleInput').value = siteData.title || '';
       document.getElementById('siteSubtitleInput').value = siteData.subtitle || '';
       document.getElementById('ftLogoInput').value = siteData.ftLogo || '';
@@ -514,7 +572,6 @@
       }).catch(err => customAlert("ผิดพลาด", err.message, "❌"));
     }
 
-    // ฟังก์ชันบันทึกที่อัปเดตเพื่อรองรับสีตัวหนังสือใหม่
     function saveDesign() { 
       updateSettingsDb({ 
         themePrimary: document.getElementById('themePrimaryInput').value, 
@@ -594,13 +651,14 @@
       const allMedia = []; snapshot.forEach(doc => { let d = doc.data(); d.id = doc.id; allMedia.push(d); });
       let html = "";
       
+      // ✨ เพิ่มลูกเล่นคลาส floating-emoji ให้หนังสือขยับได้ ✨
       html += `
         <div style="background: var(--banner-bg); border-radius: 20px; padding: 40px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); color: var(--banner-text); animation: fadeIn 0.6s; border: 1px solid rgba(0,0,0,0.05);">
           <div style="flex: 1;">
             <h2 style="margin: 0 0 10px 0; font-size: 26px;">พร้อมที่จะเรียนรู้หรือยังคะ? 🎒</h2>
             <p style="margin: 0; font-size: 16px; opacity: 0.9; line-height: 1.5;">เลื่อนลงเพื่อดูสื่ออัปเดตล่าสุด หรือคลิกที่ป้ายชื่อหมวดหมู่เพื่อกระโดดไปดูเนื้อหาเฉพาะด้านได้เลยค่ะ</p>
           </div>
-          <div style="font-size: 65px; margin-left: 20px; text-shadow: 2px 4px 10px rgba(0,0,0,0.1);">📚</div>
+          <div class="floating-emoji" style="font-size: 65px; margin-left: 20px; text-shadow: 2px 4px 10px rgba(0,0,0,0.1);">📚</div>
         </div>
       `;
 
