@@ -100,7 +100,6 @@
     .bot-message h4 { margin: 0 0 10px 0; color: var(--primary); font-size: 16px; display: flex; align-items: center; gap: 8px; }
     .bot-message p { margin: 0 0 15px 0; font-size: 14px; color: #475569; line-height: 1.5; background: #f8fafc; padding: 15px; border-radius: 12px; }
     
-    /* 💬 อนิเมชันตัวหนังสือพี่ฮูกเฟดเข้า */
     .fade-text { animation: fadeIn 0.5s ease-out; }
     
     .bot-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; padding: 10px; border-radius: 50px; font-size: 14px; cursor: pointer; width: 100%; transition: 0.2s; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -178,6 +177,19 @@
       <button class="btn-modal btn-primary" onclick="closeModal('modal-alert')">ตกลง</button>
     </div>
   </div>
+  
+  <!-- ⚠️ ป๊อปอัป ยืนยันการลบที่เพิ่มเข้ามาเพื่อแก้บั๊ก -->
+  <div id="modal-confirm" class="custom-modal">
+    <div class="modal-box">
+      <div class="modal-icon" style="font-size: 40px; margin-bottom:10px;">⚠️</div>
+      <h2 class="modal-title">ยืนยันการลบ</h2>
+      <p class="modal-desc" style="color:#64748b; margin-bottom: 20px;">คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?<br>(ลบแล้วกู้คืนไม่ได้)</p>
+      <div class="modal-btn-group">
+        <button class="btn-modal btn-cancel" onclick="closeModal('modal-confirm')">ยกเลิก</button>
+        <button class="btn-modal btn-primary" id="confirmDeleteBtn" style="background: #ef4444;">ยืนยันการลบ</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ================= หน้าต้อนรับ ================= -->
   <div id="splash-screen">
@@ -213,7 +225,6 @@
         <div class="close-bot" onclick="toggleBotMessage(event)">✖</div>
         <h4>🦉 พี่ฮูกชวนรู้!</h4>
         <p id="bot-text">กดปุ่มด้านล่างสิ พี่ฮูกจะแนะนำสื่อสนุกๆ ให้เรียน!</p>
-        <!-- ปุ่มกดแล้วมีเอฟเฟกต์พลุกระจาย -->
         <button class="bot-btn" onclick="fetchRandomMedia(event)">สุ่มแนะนำเนื้อหาให้หน่อย 🔄</button>
       </div>
       <div class="bot-avatar">
@@ -255,7 +266,7 @@
           <button class="sidebar-btn active" onclick="switchAdminTab('tab-design', this)">🎨 ดีไซน์และหน้าปก</button>
           <button class="sidebar-btn" onclick="switchAdminTab('tab-menus', this)">📑 ชื่อเว็บและเมนู</button>
           <button class="sidebar-btn" onclick="switchAdminTab('tab-add', this)">📚 เพิ่มสื่อการเรียนรู้</button>
-          <button class="sidebar-btn" onclick="switchAdminTab('tab-manage', this)">🗑️ ลบสื่อการเรียนรู้</button>
+          <button class="sidebar-btn" onclick="switchAdminTab('tab-manage', this)">🗑️ จัดการและลบสื่อ</button>
         </div>
         <button class="sidebar-logout" onclick="logoutAdmin()">🚪 ออกจากระบบ</button>
       </div>
@@ -320,12 +331,15 @@
             <div class="form-group"><label>คำอธิบายใต้ชื่อเว็บ:</label><input type="text" id="siteSubtitleInput" class="form-control"></div>
           </div>
           <button class="btn-blue" onclick="saveHeader()">💾 บันทึกชื่อเว็บไซต์</button>
-          <div class="section-divider">2. จัดการเมนู (แบบมินิมอล)</div>
+          
+          <div class="section-divider">2. จัดการเมนู (เพิ่มลิงก์อิสระได้)</div>
           <div id="adminMenuList" style="margin-bottom: 20px;"></div>
-          <div style="display:flex; gap:10px; align-items:center;">
-            <input type="text" id="newMenuInput" class="form-control" placeholder="พิมพ์ชื่อเมนูใหม่..." style="margin-bottom:0;">
-            <button class="btn-green" style="white-space:nowrap;" onclick="addNewMenu()">+ เพิ่มเมนู</button>
+          <div style="display:flex; flex-direction: column; gap:10px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <input type="text" id="newMenuInput" class="form-control" placeholder="* พิมพ์ชื่อเมนูใหม่ (เช่น แบบทดสอบ)" style="margin-bottom:0;">
+            <input type="url" id="newMenuLinkInput" class="form-control" placeholder="ลิงก์ไปเว็บอื่น (ถ้าใส่ พอกดเมนูนี้จะเด้งไปเว็บที่ระบุ)" style="margin-bottom:0;">
+            <button class="btn-green" onclick="addNewMenu()">+ เพิ่มเมนู</button>
           </div>
+          
           <div class="section-divider">3. ข้อมูลท้ายเว็บไซต์ (Footer)</div>
           <div class="form-group"><label>URL โลโก้ (วงกลมซ้ายสุด):</label><input type="url" id="ftLogoInput" class="form-control" placeholder="https://..."></div>
           <div class="grid-2">
@@ -434,20 +448,17 @@
       
       if(msgBox.style.display === 'block') {
         msgBox.style.display = 'none';
-        // 🎵 กดปิดนกฮูก -> ปิดเสียงเพลง
         player.pause(); 
       } else {
         msgBox.style.display = 'block';
         fetchRandomMedia(); 
-        // 🎵 กดเปิดนกฮูก -> เปิดเสียงเพลง 10%
         player.volume = 0.1;
         if(player.src) player.play().catch(e => console.log(e));
       }
     }
 
     function fetchRandomMedia(event) {
-      if(event) { event.stopPropagation(); fireParticles(event); } // จุดพลุตอนกดปุ่ม!
-      
+      if(event) { event.stopPropagation(); fireParticles(event); }
       const textEl = document.getElementById('bot-text');
       
       db.collection("medias").get().then((snap) => {
@@ -458,12 +469,21 @@
           textEl.innerHTML = "ตอนนี้ยังไม่มีสื่อใหม่ๆ ในระบบเลยค่ะ 😅";
           return;
         }
-        const randomItem = globalMediaCache[Math.floor(Math.random() * globalMediaCache.length)];
+        // สุ่มเนื้อหาเฉพาะหมวดที่ไม่มีลิงก์ไปเว็บอื่น
+        const internalMedias = globalMediaCache.filter(m => {
+          let mMenu = siteData.menus.find(x => x.id === m.category);
+          return mMenu && !mMenu.link;
+        });
+        
+        if(internalMedias.length === 0) {
+           textEl.innerHTML = "ตอนนี้ยังไม่มีสื่อใหม่ๆ ในระบบเลยค่ะ 😅"; return;
+        }
+
+        const randomItem = internalMedias[Math.floor(Math.random() * internalMedias.length)];
         const catName = getCategoryName(randomItem.category);
         
-        // ลูกเล่นตัวหนังสือเฟดอินเข้า
         textEl.style.animation = 'none';
-        textEl.offsetHeight; // Reset animation
+        textEl.offsetHeight; 
         textEl.innerHTML = `พี่ฮูกแนะนำให้ลองเรียนหมวด <b>${catName}</b> ดูสิ!<br><br><span style="color:var(--primary); font-weight:600;">👉 ${randomItem.title || 'สื่อการสอนน่าสนใจ'}</span>`;
         textEl.style.animation = 'fadeIn 0.5s ease-out';
       });
@@ -489,7 +509,6 @@
       document.documentElement.style.setProperty('--banner-bg', siteData.bannerBg || '#eef2ff');
       document.documentElement.style.setProperty('--banner-text', siteData.bannerText || '#4338ca');
       
-      // ตั้งค่าระบบเสียงเพลง 10%
       const player = document.getElementById('bgMusicPlayer');
       player.src = siteData.bgMusicUrl || '';
       player.volume = 0.1;
@@ -514,12 +533,19 @@
 
       let menuHtml = `<button class="nav-btn ${currentCategoryView==='all' ? 'active':''}" onclick="loadAllMediaFeed()">🏠 หน้าแรก (ฟีดรวม)</button>`; 
       let selectHtml = ''; let adminMenuHtml = '';
+      
       siteData.menus.forEach((menu, index) => {
-        menuHtml += `<button class="nav-btn ${currentCategoryView===menu.id ? 'active':''}" onclick="loadMedia('${menu.id}')">${menu.name}</button>`;
-        selectHtml += `<option value="${menu.id}">${menu.name}</option>`;
+        // ถ้าระบุลิงก์ไว้ ให้กดแล้วเด้งไปแท็บใหม่ 🔗
+        if(menu.link && menu.link.trim() !== '') {
+           menuHtml += `<button class="nav-btn" onclick="window.open('${menu.link}', '_blank')">${menu.name} 🔗</button>`;
+        } else {
+           menuHtml += `<button class="nav-btn ${currentCategoryView===menu.id ? 'active':''}" onclick="loadMedia('${menu.id}')">${menu.name}</button>`;
+           selectHtml += `<option value="${menu.id}">${menu.name}</option>`;
+        }
+
         adminMenuHtml += `
           <div class="menu-item-clean">
-            <span style="font-weight: 500; color: #333;">${menu.name}</span>
+            <span style="font-weight: 500; color: #333;">${menu.name} ${menu.link ? '<small style="color:#3b82f6;">(ลิงก์นอก)</small>' : ''}</span>
             <div class="menu-actions">
               ${index > 0 ? `<span onclick="moveMenu(${index}, -1)">↑ ขึ้น</span>` : ''}
               ${index < siteData.menus.length - 1 ? `<span onclick="moveMenu(${index}, 1)">↓ ลง</span>` : ''}
@@ -527,6 +553,7 @@
             </div>
           </div>`;
       });
+      
       document.getElementById('menuContainer').innerHTML = menuHtml;
       document.getElementById('categorySelect').innerHTML = selectHtml;
       document.getElementById('adminMenuList').innerHTML = adminMenuHtml;
@@ -566,7 +593,6 @@
       document.getElementById('div-desc').style.display = isInd ? 'none' : 'block';
     }
 
-    // ฟังก์ชันตอนกดเข้าเว็บ (ตัดระบบออโต้เพลย์เพลงออก)
     function enterSite() {
       document.getElementById('splash-screen').style.opacity = '0';
       document.getElementById('splash-screen').style.transform = 'scale(1.1)';
@@ -590,15 +616,28 @@
     function saveHeader() { updateSettingsDb({ title: document.getElementById('siteTitleInput').value, subtitle: document.getElementById('siteSubtitleInput').value }, "อัปเดตชื่อเว็บไซต์แล้ว"); }
     function saveFooter() { updateSettingsDb({ ftLogo: document.getElementById('ftLogoInput').value, ftTitle: document.getElementById('ftTitleInput').value, ftSubject: document.getElementById('ftSubjectInput').value, ftBarcode: document.getElementById('ftBarcodeInput').value }, "อัปเดตข้อมูลท้ายเว็บไซต์แล้ว"); }
 
+    // ฟังก์ชันเพิ่มเมนูใหม่ + เพิ่มลิงก์ทางเลือก
     function addNewMenu() {
       const name = document.getElementById('newMenuInput').value; if(!name) return;
-      let newMenus = [...siteData.menus, { id: "menu_" + Date.now(), name: name }];
-      db.collection("settings").doc("siteConfig").set({ menus: newMenus }, { merge: true }).then(() => { siteData.menus = newMenus; applySettings(); document.getElementById('newMenuInput').value = ''; });
+      const link = document.getElementById('newMenuLinkInput').value.trim();
+      
+      let newMenuObj = { id: "menu_" + Date.now(), name: name };
+      if(link) newMenuObj.link = link; // เพิ่มคุณสมบัติลิงก์เข้าไป
+
+      let newMenus = [...siteData.menus, newMenuObj];
+      db.collection("settings").doc("siteConfig").set({ menus: newMenus }, { merge: true }).then(() => { 
+        siteData.menus = newMenus; 
+        applySettings(); 
+        document.getElementById('newMenuInput').value = ''; 
+        document.getElementById('newMenuLinkInput').value = '';
+      });
     }
+    
     function moveMenu(index, dir) {
       let newMenus = [...siteData.menus]; const temp = newMenus[index]; newMenus[index] = newMenus[index + dir]; newMenus[index + dir] = temp;
       db.collection("settings").doc("siteConfig").set({ menus: newMenus }, { merge: true }).then(() => { siteData.menus = newMenus; applySettings(); });
     }
+    
     function deleteMenu(index) {
       document.getElementById('confirmDeleteBtn').onclick = function() {
         let newMenus = [...siteData.menus]; newMenus.splice(index, 1);
@@ -623,9 +662,8 @@
     }
     function logoutAdmin() { isAdminLoggedIn = false; document.getElementById('admin-dashboard').style.display = 'none'; document.getElementById('student-view').style.display = 'flex'; loadAllMediaFeed(); }
 
-    /* 🃏 ปรับให้การ์ดแสดงผลแอนิเมชันทีละใบ (Staggered) */
     function buildCardHtml(data, index = 0) {
-      let delay = (index * 0.1) + 's'; // หน่วงเวลาตามลำดับใบ
+      let delay = (index * 0.1) + 's';
       let imgHTML = data.imgUrl ? `<img src="${data.imgUrl}" class="card-image" style="width:100%; max-height:300px; object-fit:cover; border-radius:12px; margin-bottom:15px;">` : '';
       let stdHtml = data.standard ? `<div class="info-box"><h4>🎯 มาตรฐาน:</h4><p>${data.standard.replace(/\n/g, '<br>')}</p></div>` : '';
       let indHtml = data.indicator ? `<div class="info-box"><h4>📌 ตัวชี้วัด:</h4><p>${data.indicator.replace(/\n/g, '<br>')}</p></div>` : '';
@@ -656,7 +694,6 @@
       const allMedia = []; snapshot.forEach(doc => { let d = doc.data(); d.id = doc.id; allMedia.push(d); });
       let html = "";
       
-      // 🌊 แบนเนอร์มีชีวิต (Animated Gradient)
       html += `
         <div class="animated-banner" style="background: linear-gradient(135deg, var(--banner-bg), #ffffff, var(--banner-bg)); border-radius: 20px; padding: 40px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); color: var(--banner-text); border: 1px solid rgba(0,0,0,0.05);">
           <div style="flex: 1;">
@@ -670,6 +707,7 @@
       if(allMedia.length === 0) html += "<div class='card' style='text-align:center;'>ยังไม่มีเนื้อหาในระบบค่ะ</div>";
       else {
         siteData.menus.forEach(menu => {
+          if (menu.link) return; // ไม่แสดงเมนูที่เป็นลิงก์ภายนอกในฟีดรวม
           const catMedia = allMedia.filter(m => m.category === menu.id);
           if(catMedia.length > 0) {
             html += `<div class='feed-category-header' onclick="loadMedia('${menu.id}')" title="คลิกเพื่อสลับไปหมวดหมู่นี้">${menu.name}</div>`;
@@ -684,7 +722,6 @@
       currentCategoryView = categoryId; applySettings();
       const display = document.getElementById('display-section');
       
-      // 🎵 เมื่อกดเข้าเนื้อหา ให้พับเก็บพี่ฮูกและปิดเสียงทันที
       document.getElementById('bot-message').style.display = 'none';
       const player = document.getElementById('bgMusicPlayer');
       if(!player.paused) player.pause();
